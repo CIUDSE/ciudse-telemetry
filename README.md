@@ -15,18 +15,24 @@ Recomiendo usar el editor Visual Studio Code
 [Descargar VS Code](https://code.visualstudio.com/download)
 
 Para empezar, clone el repositorio
-```git clone <link>```
+```
+git clone https://github.com/skrobchik/ciudse-telemetry.git
+```
 
 y abra la carpeta en Visual Studio Code. Puede abrir una terminal dentro de VS Code presionando las teclas `Ctrl` y `~` en su teclado. La tecla `~` se encuentra en la parte superior izquierda del teclado.
 
 La terminal se abrira en el directorio del proyecto.
 
 Para instalar todas las dependencias del proyecto use
-```npm install```
+```
+npm install
+```
 esto puede tardar unos minutos
 
 Ya que se instalaron todas las dependencias, puede usar el comando
-```npm run start:dev```
+```
+npm run start:dev
+```
 para prender un servidor web de desarrollo que se actualizara automaticamente si cambia algo en el programa.
 Navege a [localhost:8080](http://localhost:8080) para observar el resultado
 
