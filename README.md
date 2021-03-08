@@ -34,6 +34,6 @@ Ya que se instalaron todas las dependencias, puede usar el comando
 npm run start:dev
 ```
 para prender un servidor web de desarrollo que se actualizara automaticamente si cambia algo en el programa.
-Navege a [localhost:8080](http://localhost:8080) para observar el resultado
+Navege a [localhost:8000](http://localhost:8000) para observar el resultado
 
 Puede dirigirse a la documentacion de OpenMCT en su repositorio de GitHub para ver como sirve y como desarrollar plugins para el.
