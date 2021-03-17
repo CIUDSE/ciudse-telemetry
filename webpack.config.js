@@ -6,11 +6,9 @@ const src = path.join(__dirname, 'src')
 module.exports = {
   // mode: 'production',
   mode: 'development',
-  entry: {
-    main: path.join(src, 'main.js')
-  },
+  entry: path.join(src, 'main.js'),
   output: {
-    filename: '[name].js',
+    filename: 'bundle.js',
     path: path.join(__dirname, 'dist')
   },
   plugins: [

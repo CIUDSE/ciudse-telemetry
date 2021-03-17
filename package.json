@@ -5,21 +5,12 @@
   "private": true,
   "scripts": {
     "build:dev": "webpack",
-    "start:dev": "webpack serve",
-    "lint": "eslint src webpack.config.js --ext .js",
-    "lint:fix": "eslint src webpack.config.js --ext .js --fix"
+    "start:dev": "webpack serve"
   },
   "author": "Club de Investigación Universitario de Desarrollo en Sistemas Espaciales",
   "license": "ISC",
   "devDependencies": {
     "copy-webpack-plugin": "^8.0.0",
-    "eslint": "^7.21.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-html": "^6.1.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-vue": "^7.7.0",
     "webpack": "^5.24.3",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"

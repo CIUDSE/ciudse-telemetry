@@ -1,4 +1,4 @@
-import openmct from '../node_modules/openmct/dist/openmct.js'
+import openmct from 'node_modules/openmct/dist/openmct'
 
 const ONE_SECOND = 1000
 const THIRTY_SECONDS = 30 * ONE_SECOND
