@@ -1,14 +1,16 @@
-import openmct from 'node_modules/openmct/dist/openmct'
+import openmct from 'openmct'
+import HelloWorldPlugin from './plugins/hello-world'
+import TestSpaceshipPlugin from './plugins/test-spaceship'
 
 const ONE_SECOND = 1000
 const THIRTY_SECONDS = 30 * ONE_SECOND
 const ONE_MINUTE = 60 * ONE_SECOND
 const THIRTY_MINUTES = 30 * ONE_MINUTE
 
-openmct.setAssetPath('openmct-assets')
-openmct.install(new openmct.plugins.LocalStorage())
-openmct.install(new openmct.plugins.Espresso())
-openmct.install(new openmct.plugins.MyItems())
+openmct.setAssetPath('openmct')
+openmct.install(openmct.plugins.LocalStorage())
+openmct.install(openmct.plugins.MyItems())
+openmct.install(openmct.plugins.Espresso())
 openmct.install(openmct.plugins.UTCTimeSystem())
 openmct.install(openmct.plugins.Conductor({
   menuOptions: [
@@ -31,4 +33,8 @@ openmct.install(openmct.plugins.Conductor({
     }
   ]
 }))
+
+openmct.install(HelloWorldPlugin());
+openmct.install(TestSpaceshipPlugin());
+
 document.addEventListener('DOMContentLoaded', () => openmct.start(document.body))

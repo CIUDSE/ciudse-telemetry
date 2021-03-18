@@ -4,8 +4,6 @@ const CopyPlugin = require('copy-webpack-plugin')
 const src = path.join(__dirname, 'src')
 
 module.exports = {
-  // mode: 'production',
-  mode: 'development',
   entry: path.join(src, 'main.js'),
   output: {
     filename: 'bundle.js',
@@ -16,12 +14,10 @@ module.exports = {
       patterns: [
         {
           from: path.join(__dirname, 'node_modules', 'openmct', 'dist'),
-          to: 'openmct-assets',
+          to: 'openmct',
           globOptions: {
             ignore: [
-              '**/index.html',
-              '**/openmct.js',
-              '**/openmct.js.map'
+              '**/index.html'
             ]
           }
         },
@@ -29,10 +25,8 @@ module.exports = {
       ]
     })
   ],
-  resolve: {
-    alias: {
-      node_modules: path.resolve(__dirname, 'node_modules')
-    }
+  externals: {
+    openmct: 'openmct'
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
