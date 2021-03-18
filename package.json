@@ -4,7 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build:dev": "webpack",
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
     "start:dev": "webpack serve"
   },
   "author": "Club de Investigación Universitario de Desarrollo en Sistemas Espaciales",
