@@ -1,4 +1,3 @@
-import openmct from 'openmct'
 import HelloWorldPlugin from './plugins/hello-world'
 import TestSpaceshipPlugin from './plugins/test-spaceship'
 

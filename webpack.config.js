@@ -21,13 +21,10 @@ module.exports = {
             ]
           }
         },
-        { from: 'src/index.html' }
+        { from: 'static' }
       ]
     })
   ],
-  externals: {
-    openmct: 'openmct'
-  },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
