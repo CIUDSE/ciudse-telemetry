@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Test Spaceship",
+        "identifier": {
+            "namespace": "test-spaceship",
+            "key": "root"
+        },
+        "type": "folder",
+        "location": "ROOT",
+        "composition": [
+            {
+                "key": "fuel",
+                "namespace": "test-spaceship"
+            },
+            {
+                "key": "battery",
+                "namespace": "test-spaceship"
+            }
+        ]
+    },
+    {
+        "name": "Fuel",
+        "identifier": {
+            "namespace": "test-spaceship",
+            "key": "fuel"
+        },
+        "type": "folder"
+    },
+    {
+        "name": "Battery",
+        "identifier": {
+            "namespace": "test-spaceship",
+            "key": "battery"
+        },
+        "type": "folder"
+    }
+]

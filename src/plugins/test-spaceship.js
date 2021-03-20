@@ -1,40 +1,47 @@
+class DomainObjectProvider{
+    constructor(){
+        this.cache = new Map();
+        this.is_cached = false;
+    }
+
+    getDomainObjects() {
+        if(this.is_cached){
+            // eslint-disable-next-line no-unused-vars
+            return new Promise((resolve, reject) => {
+                resolve(this.cache);
+            });
+        } else {
+            return fetch("test-spaceship.json")
+                .then(response => response.text())
+                .then(value => {
+                    const objects = JSON.parse(value);
+                    objects.forEach(object => {
+                        const full_name = object.identifier.namespace + "." + object.identifier.key;
+                        this.cache.set(full_name, object);
+                    });
+                    this.is_cached = true;
+                    return this.cache;
+                });
+        }
+    }
+    
+    get(identifier) {
+        const full_name = identifier.namespace + "." + identifier.key;
+        console.log(full_name);
+        return this.getDomainObjects().then(object_map => {
+            console.log(object_map);
+            return object_map.get(full_name);
+        });
+    }
+}
+
 export default function TestSpaceshipPlugin(){
     return function install(openmct) {
         console.log("Test spaceship enabled");
         openmct.objects.addRoot({
             namespace: "test-spaceship",
-            key: "my-key"
+            key: "root"
         });
-        openmct.objects.addProvider("test-spaceship",{
-            get: function(identifier){
-                if (!(identifier.namespace === "test-spaceship")) { return; }
-                var o = {};
-                switch (identifier.key) {
-                case "my-key":
-                    o = {
-                        identifier: identifier,
-                        name: "Test spaceship",
-                        type: "folder",
-                        composition: [
-                            {
-                                key: "fuel",
-                                namespace: "test-spaceship"
-                            }
-                        ]
-                    };
-                    break;
-                case "fuel":
-                    o = {
-                        identifier: identifier,
-                        name: "Fuel",
-                        type: "folder"
-                    };
-                    break;
-                default:
-                    break;
-                }
-                return Promise.resolve(o);
-            }
-        });
+        openmct.objects.addProvider("test-spaceship", new DomainObjectProvider());
     };
 }
