@@ -10,19 +10,18 @@ class DomainObjectProvider{
             return new Promise((resolve, reject) => {
                 resolve(this.cache);
             });
-        } else {
-            return fetch("test-spaceship.json")
-                .then(response => response.text())
-                .then(value => {
-                    const objects = JSON.parse(value);
-                    objects.forEach(object => {
-                        const full_name = object.identifier.namespace + "." + object.identifier.key;
-                        this.cache.set(full_name, object);
-                    });
-                    this.is_cached = true;
-                    return this.cache;
-                });
         }
+        return fetch("test-spaceship.json")
+            .then(response => response.text())
+            .then(value => {
+                const objects = JSON.parse(value);
+                objects.forEach(object => {
+                    const full_name = object.identifier.namespace + "." + object.identifier.key;
+                    this.cache.set(full_name, object);
+                });
+                this.is_cached = true;
+                return this.cache;
+            });
     }
     
     get(identifier) {
