@@ -27,9 +27,7 @@ class DomainObjectProvider{
     
     get(identifier) {
         const full_name = identifier.namespace + "." + identifier.key;
-        console.log(full_name);
         return this.getDomainObjects().then(object_map => {
-            console.log(object_map);
             return object_map.get(full_name);
         });
     }
