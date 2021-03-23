@@ -28,7 +28,32 @@
             "namespace": "test-spaceship",
             "key": "fuel"
         },
-        "type": "example.telemetry"
+        "type": "example.telemetry",
+        "telemetry": {
+            "values": [
+                {
+                    "key": "value",
+                    "source": "value",
+                    "name": "Value",
+                    "units": "kilograms",
+                    "format": "float",
+                    "min": 0,
+                    "max": 100,
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        }
     },
     {
         "name": "Battery",
