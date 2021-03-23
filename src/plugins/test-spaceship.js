@@ -6,8 +6,7 @@ class DomainObjectProvider{
 
     getDomainObjects() {
         if(this.is_cached){
-            // eslint-disable-next-line no-unused-vars
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve, _reject) => {
                 resolve(this.cache);
             });
         }
