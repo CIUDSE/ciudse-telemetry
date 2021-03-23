@@ -15,6 +15,10 @@
             {
                 "key": "battery",
                 "namespace": "test-spaceship"
+            },
+            {
+                "namespace": "test-spaceship",
+                "key": "lights"
             }
         ]
     },
@@ -24,13 +28,46 @@
             "namespace": "test-spaceship",
             "key": "fuel"
         },
-        "type": "folder"
+        "type": "example.telemetry"
     },
     {
         "name": "Battery",
         "identifier": {
             "namespace": "test-spaceship",
             "key": "battery"
+        },
+        "type": "example.telemetry",
+        "telemetry": {
+            "values": [
+                {
+                    "key": "value",
+                    "source": "value",
+                    "name": "Value",
+                    "units": "kilograms",
+                    "format": "float",
+                    "min": 0,
+                    "max": 100,
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "name": "Lights",
+        "identifier": {
+            "namespace": "test-spaceship",
+            "key": "lights"
         },
         "type": "folder"
     }

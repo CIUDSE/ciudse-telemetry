@@ -40,5 +40,11 @@ export default function TestSpaceshipPlugin(){
             key: "root"
         });
         openmct.objects.addProvider("test-spaceship", new DomainObjectProvider());
+
+        openmct.types.addType("example.telemetry", {
+            name: "Example Telemetry Point",
+            description: "Example telemetry point from our happy tutorial.",
+            cssClass: "icon-telemetry"
+        });
     };
 }

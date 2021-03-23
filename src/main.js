@@ -1,5 +1,7 @@
 import HelloWorldPlugin from "./plugins/hello-world";
 import TestSpaceshipPlugin from "./plugins/test-spaceship";
+import HistoricalTelemetryPlugin from "./plugins/historical-telemetry";
+import RealtimeTelemetryPlugin from "./plugins/realtime-telemetry";
 
 const ONE_SECOND = 1000;
 const THIRTY_SECONDS = 30 * ONE_SECOND;
@@ -35,5 +37,7 @@ openmct.install(openmct.plugins.Conductor({
 
 openmct.install(HelloWorldPlugin());
 openmct.install(TestSpaceshipPlugin());
+openmct.install(HistoricalTelemetryPlugin());
+openmct.install(RealtimeTelemetryPlugin("ws://localhost:8081/ws/"));
 
 document.addEventListener("DOMContentLoaded", () => openmct.start(document.body));
