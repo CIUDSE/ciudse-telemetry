@@ -1,3 +1,5 @@
+import { getFullKey } from "./utils";
+
 class RealtimeTelemetryProvider{
     constructor(url){
         this.url = url;
@@ -8,7 +10,7 @@ class RealtimeTelemetryProvider{
     }
 
     subscribe(domain_object, f){
-        let socket = new WebSocket(this.url);
+        let socket = new WebSocket(this.url + getFullKey(domain_object));
         socket.onmessage = event => {
             let point = JSON.parse(event.data);
             f(point);

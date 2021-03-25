@@ -14,7 +14,7 @@ class HistoricalTelemetryProvider {
     }
 }
 
-export default function HistoricalTelemetryPlugin(){
+export default function HistoricalTelemetryPlugin() {
     return function install(openmct) {
         openmct.telemetry.addProvider(new HistoricalTelemetryProvider());
     };

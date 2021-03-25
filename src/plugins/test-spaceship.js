@@ -1,3 +1,5 @@
+import {fullKey, getFullKey} from "./utils";
+
 class DomainObjectProvider{
     constructor(){
         this.cache = new Map();
@@ -14,9 +16,9 @@ class DomainObjectProvider{
             .then(response => response.text())
             .then(value => {
                 const objects = JSON.parse(value);
-                objects.forEach(object => {
-                    const full_name = object.identifier.namespace + "." + object.identifier.key;
-                    this.cache.set(full_name, object);
+                objects.forEach(domain_object => {
+                    const full_key = getFullKey(domain_object);
+                    this.cache.set(full_key, domain_object);
                 });
                 this.is_cached = true;
                 return this.cache;
@@ -24,9 +26,9 @@ class DomainObjectProvider{
     }
     
     get(identifier) {
-        const full_name = identifier.namespace + "." + identifier.key;
+        const full_key = fullKey(identifier);
         return this.getDomainObjects().then(object_map => {
-            return object_map.get(full_name);
+            return object_map.get(full_key);
         });
     }
 }

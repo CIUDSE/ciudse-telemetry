@@ -6,7 +6,7 @@ import RealtimeTelemetryPlugin from "./plugins/realtime-telemetry";
 const ONE_SECOND = 1000;
 const THIRTY_SECONDS = 30 * ONE_SECOND;
 const ONE_MINUTE = 60 * ONE_SECOND;
-const THIRTY_MINUTES = 30 * ONE_MINUTE;
+const TEN_MINUTES = 10 * ONE_MINUTE;
 
 openmct.setAssetPath("openmct");
 openmct.install(openmct.plugins.LocalStorage());
@@ -19,7 +19,7 @@ openmct.install(openmct.plugins.Conductor({
             name: "Fixed",
             timeSystem: "utc",
             bounds: {
-                start: Date.now() - THIRTY_MINUTES,
+                start: Date.now() - TEN_MINUTES,
                 end: Date.now()
             }
         },
@@ -28,7 +28,7 @@ openmct.install(openmct.plugins.Conductor({
             timeSystem: "utc",
             clock: "local",
             clockOffsets: {
-                start: -THIRTY_MINUTES,
+                start: -ONE_MINUTE,
                 end: THIRTY_SECONDS
             }
         }
@@ -38,6 +38,6 @@ openmct.install(openmct.plugins.Conductor({
 openmct.install(HelloWorldPlugin());
 openmct.install(TestSpaceshipPlugin());
 openmct.install(HistoricalTelemetryPlugin());
-openmct.install(RealtimeTelemetryPlugin("ws://localhost:8081/ws/"));
+openmct.install(RealtimeTelemetryPlugin("ws://localhost:8081/realtime/"));
 
 document.addEventListener("DOMContentLoaded", () => openmct.start(document.body));
