@@ -12,7 +12,10 @@
     },
     "rules": {
         "camelcase": "off",
-        "no-unused-vars": "warn"
+        "no-unused-vars": [
+            "warn",
+            { "varsIgnorePattern": "^_" }
+        ]
     },
     "globals": {
         "openmct": "readonly"

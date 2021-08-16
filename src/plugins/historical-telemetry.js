@@ -4,7 +4,7 @@ class HistoricalTelemetryProvider {
   }
 
   request (_domain_object, _options) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       resolve({
         timestamp: Date.now(),
         value: 0
