@@ -1,25 +1,27 @@
 {
   "name": "ciudse-telemetry",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Telemetry Frontend",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CIUDSE/ciudse-telemetry.git"
+  },
   "private": true,
   "scripts": {
-    "build": "webpack --mode production",
-    "build:dev": "webpack --mode development",
-    "start:dev": "webpack serve --mode development",
-    "lint": "eslint src/**",
-    "lint:fix": "eslint --fix src/**"
+    "dev": "cp -r ./node_modules/openmct/dist/ ./src/openmct && parcel serve src/index.html",
+    "build": "cp -r ./node_modules/openmct/dist/ ./dist/openmct && parcel build src/index.html",
+    "test": ""
   },
+  "keywords": [],
   "author": "Club de Investigación Universitario de Desarrollo en Sistemas Espaciales",
-  "license": "ISC",
   "devDependencies": {
-    "copy-webpack-plugin": "^8.0.0",
-    "eslint": "^7.22.0",
-    "webpack": "^5.24.3",
-    "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "parcel": "^2.0.0-rc.0",
+    "parcel-resolver-ignore": "^1.0.2"
   },
   "dependencies": {
     "openmct": "https://github.com/nasa/openmct.git"
-  }
+  },
+  "parcelIgnore": [
+    "openmct/openmct.js"
+  ]
 }

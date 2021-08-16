@@ -1,35 +1,15 @@
 import {fullKey, getFullKey} from "./utils";
 
-class DomainObjectProvider{
-    constructor(){
-        this.cache = new Map();
-        this.is_cached = false;
-    }
+var spaceship_data = new Map();
+require("./test-spaceship.json").forEach(domain_object => {
+    const full_key = getFullKey(domain_object);
+    spaceship_data.set(full_key, domain_object);
+});
 
-    getDomainObjects() {
-        if(this.is_cached){
-            return new Promise((resolve, _reject) => {
-                resolve(this.cache);
-            });
-        }
-        return fetch("test-spaceship.json")
-            .then(response => response.text())
-            .then(value => {
-                const objects = JSON.parse(value);
-                objects.forEach(domain_object => {
-                    const full_key = getFullKey(domain_object);
-                    this.cache.set(full_key, domain_object);
-                });
-                this.is_cached = true;
-                return this.cache;
-            });
-    }
-    
+class DomainObjectProvider{
     get(identifier) {
         const full_key = fullKey(identifier);
-        return this.getDomainObjects().then(object_map => {
-            return object_map.get(full_key);
-        });
+        return spaceship_data.get(full_key);
     }
 }
 
