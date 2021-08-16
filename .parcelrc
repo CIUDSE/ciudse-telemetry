@@ -1,4 +1,7 @@
 {
   "extends": "@parcel/config-default",
-  "resolvers": ["parcel-resolver-ignore", "..."]
+  "resolvers": ["parcel-resolver-ignore", "..."],
+  "validators": {
+    "*.js": ["@parcel/validator-eslint"]
+  }
 }

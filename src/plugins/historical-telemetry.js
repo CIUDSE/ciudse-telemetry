@@ -1,21 +1,20 @@
 class HistoricalTelemetryProvider {
+  supportsRequest (domain_object) {
+    return domain_object.type === 'example.telemetry'
+  }
 
-    supportsRequest(domain_object) {
-        return domain_object.type === "example.telemetry";
-    }
-
-    request(_domain_object, _options) {
-        return new Promise((resolve, _reject) => {
-            resolve({
-                "timestamp": Date.now(),
-                "value": 0
-            });
-        });
-    }
+  request (_domain_object, _options) {
+    return new Promise((resolve, reject) => {
+      resolve({
+        timestamp: Date.now(),
+        value: 0
+      })
+    })
+  }
 }
 
-export default function HistoricalTelemetryPlugin() {
-    return function install(openmct) {
-        openmct.telemetry.addProvider(new HistoricalTelemetryProvider());
-    };
+export default function HistoricalTelemetryPlugin () {
+  return function install (openmct) {
+    openmct.telemetry.addProvider(new HistoricalTelemetryProvider())
+  }
 }

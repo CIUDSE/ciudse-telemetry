@@ -1,5 +1,5 @@
-export default function HelloWorldPlugin() {
-    return function install() {
-        console.log("Hello world!");
-    };
+export default function HelloWorldPlugin () {
+  return function install () {
+    console.log('Hello world!')
+  }
 }
