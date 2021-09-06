@@ -38,6 +38,6 @@ openmct.install(openmct.plugins.Conductor({
 openmct.install(HelloWorldPlugin())
 openmct.install(TestSpaceshipPlugin())
 openmct.install(HistoricalTelemetryPlugin())
-openmct.install(RealtimeTelemetryPlugin('ws://192.168.68.51:8081/realtime/'))
+openmct.install(RealtimeTelemetryPlugin('ws://localhost:8081/realtime/'))
 
 document.addEventListener('DOMContentLoaded', () => openmct.start(document.body))

@@ -13,12 +13,20 @@ export default function TestSpaceshipPlugin () {
       namespace: 'test-spaceship',
       key: 'root'
     })
+    openmct.objects.addRoot({
+      namespace: 'kerbal',
+      key: 'root'
+    })
     openmct.objects.addProvider('test-spaceship', {
       get: function (identifier) {
         return Promise.resolve(spaceship_data.get(fullKey(identifier)))
       }
     })
-
+    openmct.objects.addProvider('kerbal', {
+      get: function (identifier) {
+        return Promise.resolve(spaceship_data.get(fullKey(identifier)))
+      }
+    })
     openmct.types.addType('example.telemetry', {
       name: 'Example Telemetry Point',
       description: 'Example telemetry point from our happy tutorial.',
