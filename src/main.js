@@ -37,7 +37,10 @@ openmct.install(openmct.plugins.Conductor({
 
 openmct.install(HelloWorldPlugin())
 openmct.install(TestSpaceshipPlugin())
-openmct.install(HistoricalTelemetryPlugin())
-openmct.install(RealtimeTelemetryPlugin('ws://localhost:8081/realtime/'))
+
+const server_domain = 'localhost'
+const server_port = 8081
+openmct.install(HistoricalTelemetryPlugin(server_domain, server_port))
+openmct.install(RealtimeTelemetryPlugin(server_domain, server_port))
 
 document.addEventListener('DOMContentLoaded', () => openmct.start(document.body))
