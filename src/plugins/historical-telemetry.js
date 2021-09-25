@@ -13,8 +13,11 @@ class HistoricalTelemetryProvider {
   request (domain_object, options) {
     const key = getFullKey(domain_object)
     return fetch(
-      `http://${this.server_domain}:${this.server_port}/historical/${key}?start=${options.start},end=${options.end}`
-    ).then(response => response.json())
+      `http://${this.server_domain}:${this.server_port}/historical/${key}?start=${Math.round(options.start)}&end=${Math.round(options.end)}`
+    ).then(response => {
+      console.log(response)
+      return response.json()
+    })
   }
 }
 
