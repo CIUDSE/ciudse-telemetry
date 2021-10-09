@@ -9,6 +9,7 @@
   "private": true,
   "scripts": {
     "dev": "rsync -a --delete ./node_modules/openmct/dist/ ./dist/openmct && parcel serve src/index.html",
+    "dev-win": "powershell rm -r ./dist/openmct && powershell cp -r ./node_modules/openmct/dist ./dist/openmct && parcel serve src/index.html",
     "build": "rsync -a --delete ./node_modules/openmct/dist/ ./dist/openmct && parcel build src/index.html",
     "test": "",
     "lint": "eslint --fix ./src/**/*.js"
