@@ -1,4 +1,6 @@
-node_modules
-dist
-src/openmct
-.parcel-cache
+backend/target
+backend/static/*
+frontend/node_modules
+frontend/dist
+frontend/src/openmct
+frontend/.parcel-cache

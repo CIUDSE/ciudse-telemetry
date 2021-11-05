@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  telemetry-server:
+    image: telemetry-server
+    ports:
+      - 8081:3001
+  questdb:
+    image: questdb/questdb
+    
