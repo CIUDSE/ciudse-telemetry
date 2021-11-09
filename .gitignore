@@ -1,6 +1,6 @@
-backend/target
-backend/static/*
-frontend/node_modules
-frontend/dist
-frontend/src/openmct
-frontend/.parcel-cache
+telemetry-server/target
+telemetry-server/static/*
+telemetry-frontend/node_modules
+telemetry-frontend/dist
+telemetry-frontend/src/openmct
+telemetry-frontend/.parcel-cache
