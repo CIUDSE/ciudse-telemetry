@@ -87,7 +87,7 @@ async fn main() -> std::io::Result<()> {
             .service(realtime_index)
             .service(injest_index)
             .service(historical_index)
-            //.service(fs::Files::new("/", root_dir))
+            .service(fs::Files::new("/", root_dir))
     })
     .bind("localhost:8081")?
     .run()
