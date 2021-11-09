@@ -3,7 +3,7 @@ WORKDIR /usr/src/telemetry-server
 COPY ./telemetry-server .
 RUN cargo install --path .
 
-FROM node:lts as telemetry-frontend-builder
+FROM node:14 as telemetry-frontend-builder
 WORKDIR /usr/src/telemetry-frontend
 COPY ./telemetry-frontend .
 RUN npm ci

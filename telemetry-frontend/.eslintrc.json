@@ -1,13 +1,18 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es6": true
     },
     "extends": [
         "standard"
     ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly",
+        "openmct": "readonly"
+    },
     "parserOptions": {
-        "ecmaVersion": 12,
+        "ecmaVersion": 2018,
         "sourceType": "module"
     },
     "rules": {
@@ -19,8 +24,5 @@
                 "argsIgnorePattern": "^_"
             }
         ]
-    },
-    "globals": {
-        "openmct": "readonly"
     }
 }
