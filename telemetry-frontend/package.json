@@ -16,9 +16,6 @@
   },
   "keywords": [],
   "author": "Club de Investigación Universitario de Desarrollo en Sistemas Espaciales",
-  "dependencies": {
-    "openmct": "https://github.com/nasa/openmct.git"
-  },
   "devDependencies": {
     "@parcel/validator-eslint": "^2.0.1",
     "eslint": "^7.32.0",
@@ -30,7 +27,7 @@
     "parcel-resolver-ignore": "^2.0.0"
   },
   "engines": {
-    "node": "=14.18.1"
+    "node": "14.18.1"
   },
   "parcelIgnore": [
     "openmct/openmct.js"
