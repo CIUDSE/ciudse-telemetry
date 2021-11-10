@@ -28,3 +28,11 @@ El repositorio tiene una configuracion de contenedor de desarrollo para VSCode q
 Despues, presionar la flecha verde en la esquina inferior izquierda de VSCode, un menu aparecera, seleccionar "Reopen Folder Locally". VSCode reconstruira el contenedor de desarrollo y reabrira el repositorio dentro de este contenedor. Ahora tiene aceso a todas las herramientas y librerias necesarias: python, cargo, npm, etc.
 
 El contenedor de desarrollo tambien esta configurado para tener disponible la instancia de docker del host. Puedes usar `docker build` y `docker-compose` desde la terminal integrada de VSCode.
+
+
+## Nota
+
+Aveces el boton para subir los cambios a GitHub de VSCode no funciona. Si ese es el caso, intentar usar el CLI directamente:
+```
+git push
+```
