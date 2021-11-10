@@ -65,7 +65,7 @@ async fn querydb_suppress_errors(msg: QueryDBMsg) -> Vec<TelemetryDatum> {
 }
 
 async fn querydb(msg: QueryDBMsg) -> Result<Vec<TelemetryDatum>, Box<dyn Error>> {
-    let database_url = "http://127.0.0.1:9000/exec";
+    let database_url = "http://questdb:9000/exec";
     let full_key = msg.full_key;
     let start = msg.start;
     let end = msg.end;
