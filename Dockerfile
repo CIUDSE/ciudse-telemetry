@@ -28,7 +28,7 @@ RUN npm run build
 
 
 
-FROM debian:buster-slim
+FROM gcr.io/distroless/cc-debian11
 COPY --from=telemetry-server-builder /usr/src/telemetry-server/target/release/telemetry-server /usr/bin
 COPY --from=telemetry-frontend-builder /usr/src/telemetry-frontend/dist /static
-CMD ["telemetry-server"]
+ENTRYPOINT ["telemetry-server"]
