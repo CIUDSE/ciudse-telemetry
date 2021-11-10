@@ -8,8 +8,8 @@ RUN cargo install --path .
 
 FROM node:14.18.1-buster as telemetry-frontend-builder
 
-RUN apt update
-RUN apt install -y rsync git
+RUN apt-get update
+RUN apt-get install -y rsync git
 
 WORKDIR /usr/src/telemetry-frontend
 
