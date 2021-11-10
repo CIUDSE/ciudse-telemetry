@@ -1,0 +1,3 @@
+aiohttp
+websockets
+requests

@@ -13,7 +13,7 @@ telemetry_mappings = {
     "v.lat": "kerbal.latitude",
 }
 openmct_domain = "localhost"
-openmct_port = 8081
+openmct_port = 8080
 telemachus_domain = "127.18.208.1"
 telemachus_port = 8085
 

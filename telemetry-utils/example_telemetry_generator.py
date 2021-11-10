@@ -18,5 +18,5 @@ async def run_client(uri):
 
 
 if __name__ == "__main__":
-    asyncio.ensure_future(run_client("ws://localhost:8081/injest/test-spaceship.fuel"))
+    asyncio.ensure_future(run_client("ws://localhost:8080/injest/test-spaceship.fuel"))
     asyncio.get_event_loop().run_forever()
