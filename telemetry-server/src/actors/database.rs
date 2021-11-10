@@ -115,7 +115,11 @@ async fn querydb(msg: QueryDBMsg) -> Result<Vec<TelemetryDatum>, Box<dyn Error>>
     }
     Ok(output)
 }
-
+impl Default for DBActor {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 impl DBActor {
     pub fn new() -> DBActor {
         DBActor {
@@ -135,7 +139,7 @@ impl DBActor {
             value = msg.value,
             timestamp = msg.timestamp, 
         );
-        stream.write(query.as_bytes())?;
+        stream.write_all(query.as_bytes())?;
         Ok(query)
     }
 }
