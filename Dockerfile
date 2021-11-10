@@ -21,14 +21,16 @@ RUN apk add git rsync python3 gcc g++ make
 WORKDIR /usr/src/telemetry-frontend
 COPY ./telemetry-frontend/package.json ./telemetry-frontend/package-lock.json ./
 RUN npm ci
-COPY ./telemetry-frontend ./
 # Cache OpenMCT compilation
 RUN npm run get-openmct
+
+COPY ./telemetry-frontend ./
 RUN npm run build
 
 
 
-FROM gcr.io/distroless/cc-debian11
+FROM debian:buster-slim
 COPY --from=telemetry-server-builder /usr/src/telemetry-server/target/release/telemetry-server /usr/bin
 COPY --from=telemetry-frontend-builder /usr/src/telemetry-frontend/dist /static
-ENTRYPOINT ["telemetry-server"]
+EXPOSE 80
+CMD ["telemetry-server"]

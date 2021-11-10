@@ -77,7 +77,9 @@ async fn main() -> std::io::Result<()> {
     let db_data = web::Data::new(DBAddr::from(DBActor::new().start()));
 
     HttpServer::new(move || {
+        let cors = Cors::permissive();
         App::new()
+            .wrap(cors)
             .app_data(realtime_connections.clone())
             .app_data(db_data.clone())
             // enable logger
@@ -88,7 +90,7 @@ async fn main() -> std::io::Result<()> {
             .service(historical_index)
             .service(fs::Files::new("/", "static").index_file("index.html"))
     })
-    .bind("localhost:8081")?
+    .bind("0.0.0.0:80")?
     .run()
     .await
 }

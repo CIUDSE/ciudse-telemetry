@@ -1,10 +1,16 @@
 version: "3.7"
 
 services:
-  telemetry-server:
-    image: telemetry-server
+  ciudse-telemetry:
+    build: .
     ports:
-      - 8081:3001
+      - 8080:80
   questdb:
     image: questdb/questdb
-    
+    ports:
+      - 9000:9000
+      - 9009:9009
+      - 8812:8812
+      - 9003:9003
+    volumes:
+      - ./db:/root/.questdb/

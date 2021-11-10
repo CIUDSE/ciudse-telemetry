@@ -124,7 +124,7 @@ impl DBActor {
     }
 
     fn pushdb(&mut self, msg: PushDBMsg) -> Result<String, Box<dyn Error>> {
-        let database_address = "127.0.0.1:9009";
+        let database_address = "questdb:9009";
         if self.stream.is_none() {
             self.stream = Some(TcpStream::connect(database_address)?);
         }
