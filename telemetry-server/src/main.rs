@@ -2,6 +2,7 @@ use actix::prelude::*;
 use actix_web::{get, middleware, web, App, Error, HttpRequest, HttpResponse, HttpServer};
 use actix_web_actors::ws;
 use actix_files as fs;
+use actix_cors::Cors;
 use log::{debug, info};
 use serde::Deserialize;
 use telemetry_server::actors::*;
@@ -68,8 +69,6 @@ async fn injest_index(
 async fn main() -> std::io::Result<()> {
     //std::env::set_var("RUST_LOG", "debug,actix_server=debug,actix_web=debug");
     std::env::set_var("RUST_LOG", "info,actix_server=info,actix_web=info");
-
-    let root_dir = "static/";
     
     env_logger::init();
 
@@ -87,7 +86,7 @@ async fn main() -> std::io::Result<()> {
             .service(realtime_index)
             .service(injest_index)
             .service(historical_index)
-            .service(fs::Files::new("/", root_dir))
+            .service(fs::Files::new("/", "static").index_file("index.html"))
     })
     .bind("localhost:8081")?
     .run()
