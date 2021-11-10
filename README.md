@@ -29,6 +29,23 @@ Despues, presionar la flecha verde en la esquina inferior izquierda de VSCode, u
 
 El contenedor de desarrollo tambien esta configurado para tener disponible la instancia de docker del host. Puedes usar `docker build` y `docker-compose` desde la terminal integrada de VSCode.
 
+## Ejemplo
+
+En el contenedor de desarrollo abrir una nueva terminal y ejecutar
+```
+docker-compose build
+docker-compose up
+```
+
+Abrir una nueva terminal, navegar al directorio de `telemetry-utils` y ejecutar `example_telemetry_generator.py`
+```
+cd telemetry-utils
+python example_telemetry_generator.py
+```
+
+Abrir un buscador web en la pagina `localhost:8080`
+
+Seleccionar el punto de telemetria "Test Spaceship - Fuel". En la control de banda de tiempo de OpenMCT, seleccionar el modo de tiempo real. Se deberia de ver una onda senoidal. Refrescar la pagina, los datos generados deberian de permanecer, se puede navegar a la izquierda y derecha en el tiempo sosteniendo la tecla ALT y arrastrando con el mouse por la grafica o por la banda de tiempo.
 
 ## Nota
 
