@@ -8,11 +8,16 @@
   },
   "private": true,
   "scripts": {
-    "install-openmct": "mkdir -p ./dist/openmct && rsync -a --delete ./node_modules/openmct/dist/ ./dist/openmct",
-    "dev": "npm run install-openmct && parcel serve src/index.html",
-    "build": "npm run install-openmct && parcel build src/index.html",
+    "fetch-openmct": "if cd openmct; then git pull; else git clone https://github.com/nasa/openmct.git; fi",
+    "build-openmct": "cd openmct && npm install && npm run build:prod && cd ..",
+    "install-openmct": "mkdir -p ./dist/openmct && rsync -a --delete ./openmct/dist/ ./dist/openmct",
+    "get-openmct": "npm run fetch-openmct && npm run build-openmct && npm run install-openmct",
+    "dev:clean": "npm run get-openmct && npm run dev",
+    "dev": "npm run lint && parcel serve src/index.html",
+    "build": "npm run lint && npm run get-openmct && parcel build src/index.html",
     "test": "",
-    "lint": "eslint --fix ./src/**/*.js"
+    "lint": "eslint ./src/**/*.js",
+    "lint:fix": "eslint --fix ./src/**/*.js"
   },
   "keywords": [],
   "author": "Club de Investigación Universitario de Desarrollo en Sistemas Espaciales",
@@ -27,7 +32,7 @@
     "parcel-resolver-ignore": "^2.0.0"
   },
   "engines": {
-    "node": "14.18.1"
+    "node": "14.18"
   },
   "parcelIgnore": [
     "openmct/openmct.js"
