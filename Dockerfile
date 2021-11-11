@@ -25,7 +25,7 @@ RUN npm ci
 RUN npm run get-openmct
 
 COPY ./telemetry-frontend ./
-RUN npm run build
+RUN npm run build:skipopenmct
 
 
 
