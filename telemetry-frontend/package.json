@@ -12,9 +12,8 @@
     "build-openmct": "cd openmct && npm install && npm run build:prod && cd ..",
     "install-openmct": "mkdir -p ./dist/openmct && rsync -a --delete ./openmct/dist/ ./dist/openmct",
     "get-openmct": "npm run fetch-openmct && npm run build-openmct && npm run install-openmct",
-    "dev:clean": "npm run get-openmct && npm run dev",
     "dev": "npm run lint && parcel serve src/index.html",
-    "build": "npm run lint && npm run get-openmct && parcel build src/index.html",
+    "build": "npm run lint && parcel build src/index.html",
     "test": "",
     "lint": "eslint ./src/**/*.js",
     "lint:fix": "eslint --fix ./src/**/*.js"

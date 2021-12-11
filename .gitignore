@@ -4,3 +4,4 @@ telemetry-frontend/node_modules
 telemetry-frontend/dist
 telemetry-frontend/.parcel-cache
 db/*
+telemetry-server.tar
