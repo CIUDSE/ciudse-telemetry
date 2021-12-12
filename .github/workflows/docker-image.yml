@@ -29,9 +29,9 @@ jobs:
       run: docker save ciudse-telemetry-arm64 | gzip > ciudse-telemetry-arm64.tar.gz
     
     - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            ciudse-telemetry-amd64.tar.gz
-            ciudse-telemetry-arm64.tar.gz
-            docker-compose.yml
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          ciudse-telemetry-amd64.tar.gz
+          ciudse-telemetry-arm64.tar.gz
+          docker-compose.yml
