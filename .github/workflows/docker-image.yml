@@ -28,33 +28,10 @@ jobs:
     - name: Save the Docker image and compress (arm64)
       run: docker save ciudse-telemetry-arm64 | gzip > ciudse-telemetry-arm64.tar.gz
     
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Upload Release Assets (Docker image amd64)
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./
-        asset_name: ciudse-telemetry-amd64.tar.gz
-        asset_content_type: application/gzip
-        
-    - name: Upload Release Assets (Docker image arm64)
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./
-        asset_name: ciudse-telemetry-arm64.tar.gz
-        asset_content_type: application/gzip
+    - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ciudse-telemetry-amd64.tar.gz
+            ciudse-telemetry-arm64.tar.gz
+            docker-compose.yml
