@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM rust:1-buster as telemetry-server-builder
+FROM --platform=${BUILDPLATFORM} rust:1-buster as telemetry-server-builder
 
 WORKDIR /usr/src
 RUN USER=root cargo new telemetry-server
@@ -25,7 +25,7 @@ RUN cargo build --release --target $(cat /rust_target.txt)
 RUN mv ./target/$(cat /rust_target.txt) ./target/docker
 
 
-FROM --platform=$BUILDPLATFORM node:14-alpine as telemetry-frontend-builder
+FROM --platform=${BUILDPLATFORM} node:14-alpine as telemetry-frontend-builder
 
 RUN apk update
 RUN apk add git rsync python3 gcc g++ make
