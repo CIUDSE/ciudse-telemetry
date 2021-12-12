@@ -56,5 +56,3 @@ jobs:
         asset_path: ./
         asset_name: ciudse-telemetry-arm64.tar.gz
         asset_content_type: application/gzip
-
-
