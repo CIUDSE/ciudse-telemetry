@@ -28,7 +28,7 @@ RUN mv ./target/$(cat /rust_target.txt) ./target/docker
 FROM --platform=${BUILDPLATFORM} node:14-buster-slim as telemetry-frontend-builder
 
 RUN apt-get update
-RUN apt-get install git rsync python3 gcc g++ make
+RUN apt-get install -y git rsync python3 gcc g++ make
 
 WORKDIR /usr/src/telemetry-frontend
 COPY ./telemetry-frontend/package.json ./telemetry-frontend/package-lock.json ./
