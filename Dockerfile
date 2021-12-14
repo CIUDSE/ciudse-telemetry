@@ -25,7 +25,7 @@ RUN cargo build --release --target $(cat /rust_target.txt)
 RUN mv ./target/$(cat /rust_target.txt) ./target/docker
 
 
-FROM --platform=${BUILDPLATFORM} node:14-alpine as telemetry-frontend-builder
+FROM --platform=${BUILDPLATFORM} node:14-buster-slim as telemetry-frontend-builder
 
 RUN apk update
 RUN apk add git rsync python3 gcc g++ make
