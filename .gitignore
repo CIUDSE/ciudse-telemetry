@@ -3,5 +3,6 @@ telemetry-server/static/*
 telemetry-frontend/node_modules
 telemetry-frontend/dist
 telemetry-frontend/.parcel-cache
+telemetry-frontend/openmct
 db/*
 telemetry-server.tar
