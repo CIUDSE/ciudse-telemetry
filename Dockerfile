@@ -33,10 +33,10 @@ RUN apk add git rsync python3 gcc g++ make
 WORKDIR /usr/src/telemetry-frontend
 COPY ./telemetry-frontend/package.json ./telemetry-frontend/package-lock.json ./
 
-# Cache OpenMCT compilation
-RUN npm run get-openmct
-
 RUN npm ci
+
+# Cache OpenMCT compilation
+RUN npm run setup-deps
 
 COPY ./telemetry-frontend ./
 RUN npm run build

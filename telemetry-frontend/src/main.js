@@ -2,6 +2,7 @@ import HelloWorldPlugin from './plugins/hello-world'
 import TestSpaceshipPlugin from './plugins/test-spaceship'
 import HistoricalTelemetryPlugin from './plugins/historical-telemetry'
 import RealtimeTelemetryPlugin from './plugins/realtime-telemetry'
+import CesiumMapPlugin from './plugins/cesium-map/cesium-map'
 
 const ONE_SECOND = 1000
 const THIRTY_SECONDS = 30 * ONE_SECOND
@@ -42,5 +43,7 @@ const server_domain = 'localhost'
 const server_port = 8080
 openmct.install(HistoricalTelemetryPlugin(server_domain, server_port))
 openmct.install(RealtimeTelemetryPlugin(server_domain, server_port))
+
+openmct.install(CesiumMapPlugin())
 
 document.addEventListener('DOMContentLoaded', () => openmct.start(document.body))
