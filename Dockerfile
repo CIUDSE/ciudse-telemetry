@@ -35,10 +35,10 @@ COPY ./telemetry-frontend/package.json ./telemetry-frontend/package-lock.json ./
 
 RUN npm ci
 
-# Cache OpenMCT compilation
-RUN npm run setup-deps
-
 COPY ./telemetry-frontend ./
+
+# Cache OpenMCT compilations
+RUN npm run setup-deps
 RUN npm run build
 
 
