@@ -1,11 +1,11 @@
-FROM --platform=${BUILDPLATFORM} rust:1-buster as telemetry-server-builder
+FROM --platform=${BUILDPLATFORM:-"linux/amd64"} rust:1-buster as telemetry-server-builder
 
 WORKDIR /usr/src
 RUN USER=root cargo new telemetry-server
 WORKDIR /usr/src/telemetry-server
 
 ARG TARGETPLATFORM
-RUN case "$TARGETPLATFORM" in \
+RUN case ${TARGETPLATFORM:-"linux/amd64"} in \
     "linux/arm64") echo aarch64-unknown-linux-gnu > /rust_target.txt && \
     apt-get update && apt-get install -y gcc-aarch64-linux-gnu && \
     mkdir .cargo && echo [target.aarch64-unknown-linux-gnu] > .cargo/config &&  \
@@ -25,7 +25,7 @@ RUN cargo build --release --target $(cat /rust_target.txt)
 RUN mv ./target/$(cat /rust_target.txt) ./target/docker
 
 
-FROM --platform=${BUILDPLATFORM} node:14-buster-slim as telemetry-frontend-builder
+FROM --platform=${BUILDPLATFORM:-"linux/amd64"} node:14-buster-slim as telemetry-frontend-builder
 
 RUN apt-get update
 RUN apt-get install -y git rsync python3 gcc g++ make
