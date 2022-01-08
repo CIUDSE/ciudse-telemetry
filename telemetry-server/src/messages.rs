@@ -1,18 +1,18 @@
 use actix::prelude::*;
 use crate::data::TelemetryDatum;
+use crate::telemetry::types::DomainObjectIdentifier;
 
 #[derive(Message, Debug, Clone)]
 #[rtype("()")]
 pub struct PushDBMsg {
-    pub full_key: String,
-    pub value: f32,
-    pub timestamp: u64
+    pub identifier: DomainObjectIdentifier,
+    pub datums: Vec<TelemetryDatum>
 }
 
 #[derive(Message, Debug, Clone)]
 #[rtype(result = "Result<Vec<TelemetryDatum>, ()>")]
 pub struct QueryDBMsg {
-    pub full_key: String,
+    pub identifier: DomainObjectIdentifier,
     pub start: u64,
     pub end: u64
 }
@@ -20,11 +20,11 @@ pub struct QueryDBMsg {
 #[derive(Message, Debug, Clone)]
 #[rtype("()")]
 pub struct UpdateTelemetryMessage {
-    pub json_data: serde_json::Value,
+    pub datums: Vec<TelemetryDatum>,
 }
 
 impl UpdateTelemetryMessage {
-    pub fn from(data: serde_json::Value) -> UpdateTelemetryMessage {
-        UpdateTelemetryMessage { json_data: data }
+    pub fn from(datums: Vec<TelemetryDatum>) -> UpdateTelemetryMessage {
+        UpdateTelemetryMessage { datums }
     }
 }

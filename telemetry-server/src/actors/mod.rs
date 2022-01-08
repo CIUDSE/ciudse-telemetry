@@ -1,7 +1,8 @@
 mod database;
-mod telemetry;
 mod common;
+mod injest;
+mod realtime;
 
 pub use database::DBActor;
-pub use telemetry::InjestSocket;
-pub use telemetry::RealtimeTelemetryProvider;
+pub use injest::InjestSocket;
+pub use realtime::RealtimeTelemetryProvider;

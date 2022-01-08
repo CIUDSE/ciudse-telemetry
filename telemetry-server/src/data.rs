@@ -1,23 +1,27 @@
-use actix::prelude::*;
-use std::{collections::{HashSet, HashMap}, sync::Mutex};
-use crate::actors::RealtimeTelemetryProvider;
 use crate::actors::DBActor;
+use crate::actors::RealtimeTelemetryProvider;
+use crate::telemetry::types::DomainObjectIdentifier;
+use actix::prelude::*;
 use serde::{Deserialize, Serialize};
+use std::{
+    collections::{HashMap, HashSet},
+    sync::Mutex,
+};
 
 #[derive(Debug)]
 pub struct DBAddr {
-    pub addr: Addr<DBActor>
+    pub addr: Addr<DBActor>,
 }
 
 impl DBAddr {
-    pub fn from(addr: Addr<DBActor>) -> DBAddr{
+    pub fn from(addr: Addr<DBActor>) -> DBAddr {
         DBAddr { addr }
     }
 }
 
 #[derive(Debug)]
 pub struct RealtimeClientConnections {
-    pub sockets: Mutex<HashMap<String, HashSet<Addr<RealtimeTelemetryProvider>>>>,
+    pub sockets: Mutex<HashMap<DomainObjectIdentifier, HashSet<Addr<RealtimeTelemetryProvider>>>>,
 }
 
 impl RealtimeClientConnections {
@@ -28,8 +32,14 @@ impl RealtimeClientConnections {
     }
 }
 
+impl Default for RealtimeClientConnections {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 #[derive(Deserialize, Serialize, Clone, Debug)]
 pub struct TelemetryDatum {
     pub timestamp: u64,
-    pub value: f64
+    pub values: HashMap<String, f64>,
 }

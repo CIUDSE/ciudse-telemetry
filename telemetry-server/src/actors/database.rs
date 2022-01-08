@@ -1,13 +1,14 @@
-use std::error::Error;
-use std::net::TcpStream;
-use std::io::prelude::*;
-use actix::prelude::*;
-use crate::messages::*;
-use log::{debug, info, warn};
 use crate::data::TelemetryDatum;
+use crate::{messages::*, telemetry::types::DomainObjectIdentifier};
+use actix::prelude::*;
+use chrono::NaiveDateTime;
+use itertools::Itertools;
+use log::{debug, info, warn};
 use serde_json::Value;
-use ms_converter;
-use chrono::{NaiveDateTime, NaiveDate};
+use std::collections::HashMap;
+use std::error::Error;
+use std::io::prelude::*;
+use std::net::TcpStream;
 
 #[derive(Debug)]
 pub struct DBActor {
@@ -17,14 +18,14 @@ pub struct DBActor {
 impl Handler<PushDBMsg> for DBActor {
     type Result = ();
 
-    fn handle(
-        &mut self,
-        msg: PushDBMsg,
-        _ctx: &mut <Self as Actor>::Context)
-    {
-        match self.pushdb(msg) {
-            Ok(r) => { debug!("{}", r); },
-            Err(e) => { warn!("{:?}", e); }
+    fn handle(&mut self, msg: PushDBMsg, _ctx: &mut <Self as Actor>::Context) {
+        match self.pushdb(&msg) {
+            Ok(_) => {
+                debug!("DB Push OK:\n{:?}", msg);
+            }
+            Err(e) => {
+                warn!("DB Push Err:\n{:?}\n{:?}", msg, e);
+            }
         };
     }
 }
@@ -32,12 +33,7 @@ impl Handler<PushDBMsg> for DBActor {
 impl Handler<QueryDBMsg> for DBActor {
     type Result = ResponseFuture<Result<Vec<TelemetryDatum>, ()>>;
 
-    fn handle(
-        &mut self,
-        msg: QueryDBMsg,
-        _ctx: &mut <Self as Actor>::Context) -> Self::Result
-    {
-        debug!("Db msg");
+    fn handle(&mut self, msg: QueryDBMsg, _ctx: &mut <Self as Actor>::Context) -> Self::Result {
         Box::pin(async move {
             let re = querydb_suppress_errors(msg);
             let re = re.await;
@@ -50,7 +46,7 @@ impl Actor for DBActor {
     type Context = Context<Self>;
 
     fn started(&mut self, _ctx: &mut Context<Self>) {
-        debug!("Database actor started!");
+        info!("Database actor started!");
     }
 }
 
@@ -60,60 +56,105 @@ async fn querydb_suppress_errors(msg: QueryDBMsg) -> Vec<TelemetryDatum> {
         Err(e) => {
             warn!("{:?}", &e);
             vec![]
-        },
+        }
     }
 }
 
-async fn querydb(msg: QueryDBMsg) -> Result<Vec<TelemetryDatum>, Box<dyn Error>> {
-    let database_url = "http://questdb:9000/exec";
-    let full_key = msg.full_key;
-    let start = msg.start;
-    let end = msg.end;
-    debug!("Stuff");
-    let datum_count_limit = 500;
-    let sql_query = format!(
-        "SELECT * FROM \"{table}\" WHERE timestamp BETWEEN CAST({left_millis}000 AS TIMESTAMP) AND CAST({right_millis}000 AS TIMESTAMP) LIMIT {datum_count_limit}",
-        table = full_key,
-        left_millis = start,
-        right_millis = end,
-        datum_count_limit = datum_count_limit,
-    );
-    debug!("SQL query");
-    let req = actix_web::client::Client::new().get(database_url).query(
-        &[
-            ("query", sql_query)
-        ]
-    )?;
-    debug!("Request URI: \"{}\"", req.get_uri());
-    let mut response = req.send().await?;
-    debug!("Response");
-    let raw_data = response.body().await?;
-    debug!("{:?}", raw_data);
-    let data: Value = serde_json::from_slice(&raw_data)?;
-    debug!("{:?}", data);
-    let dataset = &data["dataset"];
-    let mut output: Vec<TelemetryDatum> = Vec::new();
-    for row in dataset.as_array().unwrap() {
-        let val = row.as_array().unwrap()[0].as_f64().unwrap();
-        let timestamp_str = row.as_array().unwrap()[1].as_str().unwrap();
-        let n = timestamp_str.len();
-        let timestamp_str = &timestamp_str[..n-1];
-        let datetime = NaiveDateTime::parse_from_str(
-            timestamp_str,
-            "%Y-%m-%dT%H:%M:%S%.f");
+fn table_name(identifier: &DomainObjectIdentifier) -> String {
+    format!("{}::{}", identifier.namespace, identifier.key)
+}
 
-        if datetime.is_err() {
-            warn!("Couldn't convert timestamp {:?}", timestamp_str);
-            return Err(Box::new(datetime.err().unwrap()));
+fn format_db_query(msg: QueryDBMsg) -> String {
+    format!(
+        "SELECT * FROM \"{table}\" WHERE timestamp BETWEEN CAST({left_millis}000 AS TIMESTAMP) AND CAST({right_millis}000 AS TIMESTAMP) LIMIT {datum_count_limit}",
+        table = table_name(&msg.identifier),
+        left_millis = msg.start,
+        right_millis = msg.end,
+        datum_count_limit = 500,
+    )
+}
+
+#[derive(PartialEq)]
+enum DbColumnType {
+    Double,
+    Timestamp,
+}
+
+impl DbColumnType {
+    fn from_str(str: &str) -> Option<DbColumnType> {
+        match str {
+            "DOUBLE" => Some(DbColumnType::Double),
+            "TIMESTAMP" => Some(DbColumnType::Timestamp),
+            _ => None,
         }
-        let datetime = datetime.unwrap();
-        let timestamp = datetime.timestamp_millis() as u64;
-        output.push(TelemetryDatum{
-            timestamp,
-            value: val,
-        });
     }
-    Ok(output)
+}
+
+struct DbColumn {
+    col_name: String,
+    col_type: DbColumnType,
+}
+
+impl DbColumn {
+    fn from_value(value: &Value) -> Option<Self> {
+        let value = value.as_object()?;
+        let col_name = value.get("name")?.as_str()?;
+        let col_name = String::from(col_name);
+        let col_type_str = value.get("type")?.as_str()?;
+        let col_type = DbColumnType::from_str(col_type_str)?;
+        Some(DbColumn { col_name, col_type })
+    }
+}
+
+fn parse_db_row(val: &Value, timestamp_col: usize, columns: &[DbColumn]) -> Option<TelemetryDatum> {
+    let row = val.as_array()?;
+    let timestamp_str = row.get(timestamp_col)?.as_str()?;
+    let values: HashMap<String, f64> = row
+        .iter()
+        .zip(columns.iter())
+        .filter(|(_val, col)| col.col_type == DbColumnType::Double)
+        .map(|(val, col)| (col.col_name.clone(), val.as_f64().unwrap()))
+        .collect();
+    let timestamp = NaiveDateTime::parse_from_str(timestamp_str, "%Y-%m-%dT%H:%M:%S%.fZ")
+        .ok()?
+        .timestamp_millis() as u64;
+    Some(TelemetryDatum { timestamp, values })
+}
+
+async fn querydb(msg: QueryDBMsg) -> Result<Vec<TelemetryDatum>, Box<dyn Error>> {
+    let sql_query = format_db_query(msg);
+
+    let database_url = "http://questdb:9000/exec";
+
+    let req = actix_web::client::Client::new()
+        .get(database_url)
+        .query(&[("query", sql_query)])?;
+
+    let mut response = req.send().await?;
+    let raw_data = response.body().await?;
+
+    let data: Value = serde_json::from_slice(&raw_data)?;
+
+    let columns: Vec<DbColumn> = data["columns"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|val| DbColumn::from_value(val).unwrap())
+        .collect();
+
+    let dataset = data["dataset"].as_array().unwrap();
+    let timestamp_col = columns
+        .iter()
+        .find_position(|&col| col.col_type == DbColumnType::Timestamp)
+        .unwrap()
+        .0;
+
+    let datums = dataset
+        .iter()
+        .map(|row| parse_db_row(row, timestamp_col, &columns).unwrap())
+        .collect();
+
+    Ok(datums)
 }
 impl Default for DBActor {
     fn default() -> Self {
@@ -122,24 +163,33 @@ impl Default for DBActor {
 }
 impl DBActor {
     pub fn new() -> DBActor {
-        DBActor {
-            stream: None,
-        }
+        DBActor { stream: None }
     }
 
-    fn pushdb(&mut self, msg: PushDBMsg) -> Result<String, Box<dyn Error>> {
+    fn pushdb(&mut self, msg: &PushDBMsg) -> Result<(), Box<dyn Error>> {
         let database_address = "questdb:9009";
         if self.stream.is_none() {
             self.stream = Some(TcpStream::connect(database_address)?);
         }
         let mut stream = self.stream.as_ref().unwrap();
         // Influx line protocol timestamps are in nanoseconds
-        let query = format!("{table} value={value} {timestamp}000000\n\n",
-            table = msg.full_key,
-            value = msg.value,
-            timestamp = msg.timestamp, 
-        );
+        let table = table_name(&msg.identifier);
+        let mut query: String = msg
+            .datums
+            .iter()
+            .map(|datum| {
+                let values: String = datum
+                    .values
+                    .iter()
+                    .map(|(k, v)| format!("{}={}", k, v))
+                    .intersperse(String::from(","))
+                    .collect();
+                let nanos_str = format!("{}000000", datum.timestamp);
+                format!("{} {} {}\n", table, values, nanos_str)
+            })
+            .collect();
+        query.push('\n');
         stream.write_all(query.as_bytes())?;
-        Ok(query)
+        Ok(())
     }
 }

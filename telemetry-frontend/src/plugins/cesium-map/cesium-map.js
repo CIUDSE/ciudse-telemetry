@@ -24,12 +24,17 @@ class CesiumMapView {
 
 export default function CesiumMapPlugin () {
   return function install (openmct) {
+    openmct.types.addType('ciudse.types.view.cesium', {
+      name: 'Cesium Map',
+      description: 'Cesium Map',
+      creatable: true
+    })
     openmct.objectViews.addProvider({
       key: 'cesium',
       name: 'Cesium Map',
-      cssClass: 'icon-cesium',
+      cssClass: 'icon-ciudse-types-view-cesium',
       canView: (domain_object) => {
-        return domain_object.type === 'example.telemetry'
+        return domain_object.type === 'ciudse.types.view.cesium'
       },
       view: (_domain_object) => {
         return new CesiumMapView()

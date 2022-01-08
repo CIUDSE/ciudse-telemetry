@@ -1,0 +1,84 @@
+{
+    "example.telemetry": {
+        "name": "Example Telemetry Point",
+        "description": "Example telemetry point from our happy tutorial.",
+        "cssClass": "icon-telemetry",
+        "initializeValues": {
+            "telemetry": {
+                "values": [
+                    {
+                        "key": "value",
+                        "source": "value",
+                        "name": "Value",
+                        "units": "kilograms",
+                        "format": "float",
+                        "min": 0,
+                        "max": 100,
+                        "hints": {
+                            "range": 1
+                        }
+                    },
+                    {
+                        "key": "utc",
+                        "source": "server_timestamp",
+                        "name": "Timestamp",
+                        "format": "utc",
+                        "hints": {
+                            "domain": 1
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "example.v3": {
+        "name": "V3",
+        "description": "vector 3",
+        "cssClass": "icon-telemetry",
+        "initializeValues": {
+            "telemetry": {
+                "values": [
+                    {
+                        "key": "x",
+                        "source": "x",
+                        "name": "X",
+                        "units": "meters",
+                        "format": "float",
+                        "hints": {
+                            "range": 1
+                        }
+                    },
+                    {
+                        "key": "y",
+                        "source": "y",
+                        "name": "Y",
+                        "units": "meters",
+                        "format": "float",
+                        "hints": {
+                            "range": 1
+                        }
+                    },
+                    {
+                        "key": "z",
+                        "source": "z",
+                        "name": "Z",
+                        "units": "meters",
+                        "format": "float",
+                        "hints": {
+                            "range": 1
+                        }
+                    },
+                    {
+                        "key": "utc",
+                        "source": "server_timestamp",
+                        "name": "Timestamp",
+                        "format": "utc",
+                        "hints": {
+                            "domain": 1
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
