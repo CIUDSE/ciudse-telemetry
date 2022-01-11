@@ -56,7 +56,7 @@
             "namespace": "test-spaceship",
             "key": "pos"
         },
-        "type": "example.v3"
+        "type": "cesium.geodatum"
     },
     {
         "name": "Kerbal Spaceship",

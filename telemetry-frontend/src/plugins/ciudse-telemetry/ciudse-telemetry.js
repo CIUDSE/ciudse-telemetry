@@ -44,7 +44,6 @@ class RealtimeTelemetryProvider {
   subscribe (domain_object, f) {
     const socket = new WebSocket(`ws://${this.server_domain}:${this.server_port}/realtime?namespace=${domain_object.identifier.namespace}&key=${domain_object.identifier.key}`)
     socket.onmessage = (event) => {
-      console.debug(event.data)
       const points = JSON.parse(event.data)
       points.forEach(point => {
         f(point)
@@ -67,11 +66,8 @@ export default function CiudseTelemetryPlugin (server_domain, server_port) {
           if (domain_object_type_data !== undefined) {
             const initializeValues = domain_object_type_data.initializeValues
             if (initializeValues !== undefined) {
-              console.log(initializeValues)
-              console.log(domain_object)
               for (const k in initializeValues) {
                 domain_object[k] = structuredClone(initializeValues[k])
-                console.log(domain_object)
               }
             }
           }

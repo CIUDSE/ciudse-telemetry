@@ -31,37 +31,37 @@
             }
         }
     },
-    "example.v3": {
-        "name": "V3",
-        "description": "vector 3",
-        "cssClass": "icon-telemetry",
+    "cesium.geodatum": {
+        "name": "Geographical Coordinate",
+        "description": "Coordinate consisting of latitude, longitude and height",
+        "cssClass": "icon-ciudse-telemetry-pos",
         "initializeValues": {
             "telemetry": {
                 "values": [
                     {
-                        "key": "x",
-                        "source": "x",
-                        "name": "X",
-                        "units": "meters",
+                        "key": "lat",
+                        "source": "lat",
+                        "name": "Latitude",
+                        "units": "degrees",
                         "format": "float",
                         "hints": {
                             "range": 1
                         }
                     },
                     {
-                        "key": "y",
-                        "source": "y",
-                        "name": "Y",
-                        "units": "meters",
+                        "key": "lng",
+                        "source": "lng",
+                        "name": "Longitude",
+                        "units": "degrees",
                         "format": "float",
                         "hints": {
                             "range": 1
                         }
                     },
                     {
-                        "key": "z",
-                        "source": "z",
-                        "name": "Z",
+                        "key": "hgt",
+                        "source": "hgt",
+                        "name": "Height",
                         "units": "meters",
                         "format": "float",
                         "hints": {
