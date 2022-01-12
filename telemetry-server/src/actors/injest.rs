@@ -3,7 +3,7 @@ use crate::{actors::common::*, data::*, messages::*};
 use actix::prelude::*;
 use actix_web::web;
 use actix_web_actors::ws;
-use log::{debug, warn};
+use log::warn;
 use std::collections::HashMap;
 use std::{
     error::Error,
@@ -49,7 +49,6 @@ impl InjestSocket {
             if let Some(key_client_sockets) = client_sockets.get(&self.identifier) {
                 let message = UpdateTelemetryMessage::from(datums);
                 for addr in key_client_sockets {
-                    debug!("Sending message [{:?}] to: {:?}", self.identifier, addr);
                     addr.do_send(message.clone());
                 }
             }

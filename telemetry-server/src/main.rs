@@ -3,7 +3,6 @@ use actix_cors::Cors;
 use actix_files as fs;
 use actix_web::{get, middleware, web, App, Error, HttpRequest, HttpResponse, HttpServer};
 use actix_web_actors::ws;
-use log::debug;
 use serde::Deserialize;
 use telemetry_server::actors::*;
 use telemetry_server::data::*;
@@ -32,7 +31,6 @@ async fn historical_index(
             end: query_info.end,
         })
         .await;
-    debug!("Got DB msg, responding: {:?}", &raw_data);
     if raw_data.is_err() {
         return Ok(HttpResponse::Ok().body("[]"));
     }
@@ -52,8 +50,6 @@ async fn realtime_index(
     web::Query(identifier): web::Query<DomainObjectIdentifier>,
     client_data: web::Data<RealtimeClientConnections>,
 ) -> Result<HttpResponse, Error> {
-    debug!("{:?}", r);
-    debug!("Domain object requesting telemetry: {:?}", identifier);
     ws::start(
         RealtimeTelemetryProvider::new(identifier, client_data),
         &r,
@@ -69,7 +65,6 @@ async fn injest_index(
     client_data: web::Data<RealtimeClientConnections>,
     db_data: web::Data<DBAddr>,
 ) -> Result<HttpResponse, Error> {
-    debug!("New injest socket for: {:?}", identifier);
     ws::start(
         InjestSocket::new(identifier, client_data, db_data),
         &r,

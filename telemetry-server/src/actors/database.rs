@@ -3,7 +3,7 @@ use crate::{messages::*, telemetry::types::DomainObjectIdentifier};
 use actix::prelude::*;
 use chrono::NaiveDateTime;
 use itertools::Itertools;
-use log::{debug, info, warn};
+use log::warn;
 use serde_json::Value;
 use std::collections::HashMap;
 use std::error::Error;
@@ -20,9 +20,7 @@ impl Handler<PushDBMsg> for DBActor {
 
     fn handle(&mut self, msg: PushDBMsg, _ctx: &mut <Self as Actor>::Context) {
         match self.pushdb(&msg) {
-            Ok(_) => {
-                debug!("DB Push OK:\n{:?}", msg);
-            }
+            Ok(_) => { }
             Err(e) => {
                 warn!("DB Push Err:\n{:?}\n{:?}", msg, e);
             }
@@ -45,9 +43,7 @@ impl Handler<QueryDBMsg> for DBActor {
 impl Actor for DBActor {
     type Context = Context<Self>;
 
-    fn started(&mut self, _ctx: &mut Context<Self>) {
-        info!("Database actor started!");
-    }
+    fn started(&mut self, _ctx: &mut Context<Self>) { }
 }
 
 async fn querydb_suppress_errors(msg: QueryDBMsg) -> Vec<TelemetryDatum> {
