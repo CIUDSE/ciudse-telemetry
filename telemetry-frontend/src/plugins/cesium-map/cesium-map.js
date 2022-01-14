@@ -4,14 +4,46 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOi
 
 class CesiumMapView {
   constructor (domainObject, openmct) {
-    console.debug('Map View created!')
     this.domainObject = domainObject
     this.openmct = openmct
-    // this.unlistenFromMutation = openmct.objects.observe(domainObject
+    this.telemetryObjects = new Map()
+  }
+
+  addTelemetryObject (domainObject) {
+    if (this.telemetryObjects.has(domainObject.identifier)) {
+      return
+    }
+    const telemetryCollection = this.openmct.telemetry.requestCollection(this.domainObject)
+    telemetryCollection.load()
+    const cesiumTelemetryObject = {
+      telemetryCollection: telemetryCollection,
+      cartesianPositions: []
+    }
+    const callbackProperty = new Cesium.CallbackProperty((_time, result) => {
+      result = cesiumTelemetryObject.cartesianPositions
+      return result
+    })
+    const lineEntity = this.viewer.entities.add({
+      name: domainObject.name,
+      polyline: {
+        positions: callbackProperty,
+        width: 3,
+        arcType: Cesium.ArcType.None
+      }
+    })
+    cesiumTelemetryObject.lineEntity = lineEntity
+    this.telemetryObjects.set(domainObject.identifier, cesiumTelemetryObject)
+  }
+
+  updatePositions () {
+    this.telemetryObjects.forEach((cesiumTelemetryObject) => {
+      cesiumTelemetryObject.cartesianPositions = cesiumTelemetryObject.telemetryCollection.getAll().map((datum) => {
+        return Cesium.Cartesian3.fromRadians(datum.lng, datum.lat, datum.hgt)
+      })
+    })
   }
 
   show (element) {
-    console.debug('CesiumMapPlugin show')
     this.viewer = new Cesium.Viewer(element, {
       animation: false,
       baseLayerPick: false,
@@ -30,32 +62,11 @@ class CesiumMapView {
       shadows: false
     })
 
-    this.telemetryCollection = this.openmct.telemetry.requestCollection(this.domainObject)
-    this.telemetryCollection.load()
-    this.cartesianPositions = []
+    if (this.domainObject.type === 'cesium.geodatum') {
+      this.addTelemetryObject(this.domainObject)
+    }
 
-    this.intervalId = setInterval(() => {
-      this.cartesianPositions = this.telemetryCollection.getAll().map((datum) => {
-        return Cesium.Cartesian3.fromRadians(datum.lng, datum.lat, datum.hgt)
-      })
-    }, 200)
-
-    const lineEntity = this.viewer.entities.add({
-      name: this.domainObject.name,
-      polyline: {
-        positions: new Cesium.CallbackProperty(() => {
-          return this.cartesianPositions
-        }),
-        width: 5,
-        material: new Cesium.PolylineOutlineMaterialProperty({
-          color: Cesium.Color.ORANGE,
-          outlineWidth: 2,
-          outlineColor: Cesium.Color.BLACK
-        })
-      }
-    })
-
-    this.viewer.zoomTo(lineEntity)
+    this.intervalId = setInterval(() => { this.updatePositions() }, 1000)
   }
 
   destroy () {
@@ -69,17 +80,27 @@ export default function CesiumMapPlugin () {
       name: 'Cesium Map',
       description: 'Cesium Map',
       creatable: true,
-      cssClass: 'icon-ciudse-types-view-cesium'
+      cssClass: 'icon-ciudse-types-view-cesium',
+      initialize (domainObject) {
+        domainObject.composition = []
+      }
     })
     openmct.objectViews.addProvider({
       key: 'cesium',
       name: 'Cesium Map',
       cssClass: 'icon-ciudse-types-view-cesium',
-      canView: (domain_object) => {
+      canView (domain_object) {
         return domain_object.type === 'ciudse.types.view.cesium' || domain_object.type === 'cesium.geodatum'
       },
-      view: (domain_object) => {
+      view (domain_object) {
         return new CesiumMapView(domain_object, openmct)
+      }
+    })
+    openmct.composition.addPolicy((parent, child) => {
+      if (parent.type === 'ciudse.types.view.cesium') {
+        return child.type === 'cesium.geodatum'
+      } else {
+        return true
       }
     })
   }

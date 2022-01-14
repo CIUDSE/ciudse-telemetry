@@ -21,7 +21,7 @@ async def main():
             msg = f'value={val}'
             await websocket.send(msg)
             print(msg)
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.2)
 
 
 if __name__ == "__main__":

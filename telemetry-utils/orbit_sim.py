@@ -13,13 +13,13 @@ async def main():
     async with websockets.connect(uri) as websocket:
         while True:
             t = time()
-            lat = (2*pi*t/120) % (2*pi)
+            lat = (2*pi*t/30) % (2*pi)
             lng = 0
             hgt = 1000000
             msg = f'lat={lat},lng={lng},hgt={hgt}'
             await websocket.send(msg)
             print(msg)
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(1.0)
 
 
 if __name__ == "__main__":
