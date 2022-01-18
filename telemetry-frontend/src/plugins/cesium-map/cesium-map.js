@@ -1,19 +1,19 @@
 import './style.css'
+import TelemetryObjectManager from './CompositionTelemetryManager'
 
-Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2MjMyNjkxYi05M2UyLTQzMjgtYmNlMy1lYmFjYWJiN2UwM2IiLCJpZCI6NDUyMjUsImlhdCI6MTYxNDgzMTQ5NX0.zcDxbuMRtO_FucfP6IcjCWI7SNFvVR3vlZ37BGL7GBM'
+// Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2MjMyNjkxYi05M2UyLTQzMjgtYmNlMy1lYmFjYWJiN2UwM2IiLCJpZCI6NDUyMjUsImlhdCI6MTYxNDgzMTQ5NX0.zcDxbuMRtO_FucfP6IcjCWI7SNFvVR3vlZ37BGL7GBM'
 
 class CesiumMapView {
   constructor (domainObject, openmct) {
     this.domainObject = domainObject
     this.openmct = openmct
-    this.telemetryObjects = new Map()
+    this.cesiumTelemetryObjects = new Map()
+    this.compositionManager = new TelemetryObjectManager(domainObject, openmct, (domainObject) => { this.addTelemetryObject(domainObject) }, (domainObject) => { this.removeTelemetryObject(domainObject) })
   }
 
   addTelemetryObject (domainObject) {
-    if (this.telemetryObjects.has(domainObject.identifier)) {
-      return
-    }
-    const telemetryCollection = this.openmct.telemetry.requestCollection(this.domainObject)
+    console.log('Requesting collection')
+    const telemetryCollection = this.openmct.telemetry.requestCollection(domainObject)
     telemetryCollection.load()
     const cesiumTelemetryObject = {
       telemetryCollection: telemetryCollection,
@@ -32,11 +32,16 @@ class CesiumMapView {
       }
     })
     cesiumTelemetryObject.lineEntity = lineEntity
-    this.telemetryObjects.set(domainObject.identifier, cesiumTelemetryObject)
+    this.cesiumTelemetryObjects.set(domainObject.identifier, cesiumTelemetryObject)
+  }
+
+  removeTelemetryObject (domainObject) {
+    // TODO: Remove Line Entity
+    this.cesiumTelemetryObjects.delete(domainObject.identifier)
   }
 
   updatePositions () {
-    this.telemetryObjects.forEach((cesiumTelemetryObject) => {
+    this.cesiumTelemetryObjects.forEach((cesiumTelemetryObject) => {
       cesiumTelemetryObject.cartesianPositions = cesiumTelemetryObject.telemetryCollection.getAll().map((datum) => {
         return Cesium.Cartesian3.fromRadians(datum.lng, datum.lat, datum.hgt)
       })
@@ -45,6 +50,10 @@ class CesiumMapView {
 
   show (element) {
     this.viewer = new Cesium.Viewer(element, {
+      imageryProvider: new Cesium.TileMapServiceImageryProvider({
+        url: Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
+      }),
+      terrainProvider: new Cesium.EllipsoidTerrainProvider(),
       animation: false,
       baseLayerPick: false,
       fullscreenButton: false,
@@ -71,6 +80,7 @@ class CesiumMapView {
 
   destroy () {
     clearInterval(this.intervalId)
+    this.compositionManager.destroy()
   }
 }
 

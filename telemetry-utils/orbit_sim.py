@@ -11,11 +11,12 @@ async def main():
     key = 'fuel'
     uri = 'ws://172.17.0.1:8080/injest?namespace=test-spaceship&key=pos'
     async with websockets.connect(uri) as websocket:
+        t0 = time()
         while True:
             t = time()
             lat = (2*pi*t/30) % (2*pi)
             lng = 0
-            hgt = 1000000
+            hgt = 1000000 + 10000*(t-t0)
             msg = f'lat={lat},lng={lng},hgt={hgt}'
             await websocket.send(msg)
             print(msg)
