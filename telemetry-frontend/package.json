@@ -26,7 +26,8 @@
     "eslint-plugin-promise": "^5.1.1",
     "parcel": "^2.0.0",
     "parcel-resolver-ignore": "^2.0.0",
-    "cesium": "^1.88.0"
+    "cesium": "^1.88.0",
+    "openmct": "nasa/openmct"
   },
   "engines": {
     "node": "14.18"
