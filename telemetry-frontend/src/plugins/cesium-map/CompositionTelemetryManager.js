@@ -1,5 +1,5 @@
 export default class TelemetryObjectManager {
-  constructor (parentDomainObject, openmct, onAddCallback, onRemoveCallback) {
+  constructor (parentDomainObject, onAddCallback, onRemoveCallback) {
     this.domainObject = parentDomainObject
     this.setOnAddCallback(onAddCallback)
     this.setOnRemoveCallback(onRemoveCallback)

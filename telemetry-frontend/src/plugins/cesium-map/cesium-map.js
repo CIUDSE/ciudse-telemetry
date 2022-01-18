@@ -4,16 +4,15 @@ import TelemetryObjectManager from './CompositionTelemetryManager'
 // Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2MjMyNjkxYi05M2UyLTQzMjgtYmNlMy1lYmFjYWJiN2UwM2IiLCJpZCI6NDUyMjUsImlhdCI6MTYxNDgzMTQ5NX0.zcDxbuMRtO_FucfP6IcjCWI7SNFvVR3vlZ37BGL7GBM'
 
 class CesiumMapView {
-  constructor (domainObject, openmct) {
+  constructor (domainObject) {
     this.domainObject = domainObject
-    this.openmct = openmct
     this.cesiumTelemetryObjects = new Map()
-    this.compositionManager = new TelemetryObjectManager(domainObject, openmct, (domainObject) => { this.addTelemetryObject(domainObject) }, (domainObject) => { this.removeTelemetryObject(domainObject) })
+    this.compositionManager = new TelemetryObjectManager(domainObject, (domainObject) => { this.addTelemetryObject(domainObject) }, (domainObject) => { this.removeTelemetryObject(domainObject) })
   }
 
   addTelemetryObject (domainObject) {
     console.log('Requesting collection')
-    const telemetryCollection = this.openmct.telemetry.requestCollection(domainObject)
+    const telemetryCollection = openmct.telemetry.requestCollection(domainObject)
     telemetryCollection.load()
     const cesiumTelemetryObject = {
       telemetryCollection: telemetryCollection,
@@ -103,7 +102,7 @@ export default function CesiumMapPlugin () {
         return domain_object.type === 'ciudse.types.view.cesium' || domain_object.type === 'cesium.geodatum'
       },
       view (domain_object) {
-        return new CesiumMapView(domain_object, openmct)
+        return new CesiumMapView(domain_object)
       }
     })
     openmct.composition.addPolicy((parent, child) => {
