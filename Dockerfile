@@ -33,7 +33,9 @@ RUN apt-get install -y git rsync python3 gcc g++ make
 WORKDIR /usr/src/telemetry-frontend
 COPY ./telemetry-frontend/package.json ./telemetry-frontend/package-lock.json ./
 
-RUN npm ci
+# https://github.com/npm/npm/issues/17346
+# Prepare scripts for libraries (openmct build) not running inside docker container because it is executed as root. This config option fixes it.
+RUN npm config set unsafe-perm true && npm ci
 
 COPY ./telemetry-frontend/scripts ./scripts
 
