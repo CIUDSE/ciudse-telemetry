@@ -48,3 +48,7 @@ Navegar a la carpeta `telemetry-frontend`. Dentro de esta carpeta, primero se de
 
 Se puede construir el backend con docker, o si se desea, puede construirse y ejecutarse localmente con `cargo run`. En el caso de ejecutar el servidor localmente, puede ser que se tenga que cambiar el puerto del servidor. Es recomendable reconstruirlo con docker, ya que no toma mucho tiempo y los puertos de la base de datos son configurados correctamente.
 *The backend can be built with docker, or if needed, it can also be built and run locally with `cargo run`. In the case of executing the server locally, it might be needed to change the ports of the server. It is recommended to build the server with docker, since it doesn't take much time and the ports and database are configured correctly*
+
+**Generar telemetria *Generate telemetry***
+La carpeta `telemetry-utils` contiene programas de Python que generan datos de telemetria muestra y los mandan al servidor por WebSockets.
+*The `telemetry-utils` folder contains Python scripts that generate example temetry data and send it to the server via WebSockets.*
