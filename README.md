@@ -1,55 +1,50 @@
 # ciudse-telemetry
 
-Este repositorio contiene una imagen de Docker para el sistema de telemetria. Esto incluye: el servidor de telemetria, frontend y base de datos.
+Este repositorio incluye el codigo de frontend y backend para el sistema de telemetria de CIUDSE
 
-## Requisitos previos
+*This repository includes the frontend and backend code for CIUDSE's telemetry system* 
+
+
+## Requisitos previos *Prerequisites*
 
 Docker
 Git
 
-## Uso
+## Uso *Use*
 
 Clonar repositorio
+*Clone repository*
 
 Desde el directorio del repositorio:
+*From the root directory:*
 ```
-docker-compose build
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build
 docker-compose up
 ```
 
-Esto va construir y correr 2 contenedores: el servidor de telemetria y la base de datos. OpenMCT estara disponible desde localhost:8080
+Tambien es posible importar las imagenes construidas por GitHub Actions con `docker import`, en vez de construirlas desde el codigo fuente. En este caso solo se necesitaria copiar el archivo de `docker-compose.yml`.
+*It is also possible to import the images built by GitHub Actions with `docker import`, instead of building them from the source code. In that case, it is only necessary to copy the `docker-compose.yml` file.*
+
+Esto va construir y correr 2 contenedores: el servidor de telemetria (que tambien sirve el frontend) y la base de datos. OpenMCT estara disponible desde localhost:8080
+*This will build and run 2 containers: the telemetry server (which also serves the frontend) and the database. OpenMCT is available at localhost:8080*
 
 El contenedor de la base de datos montara el directorio local `./db` y guardara los datos ahi. Esto permite respaldar y transferir la base de datos entre diferentes sistemas con facilidad.
+*The database container will mount the `./db` directory and will save data there. This allows making backups and transfering data between different systems with ease*
 
-## Desarrollo
+## Desarrollo *Development*
 
 El repositorio tiene una configuracion de contenedor de desarrollo para VSCode que contiene todas las herramientas necesarias para desarrollo. Para usarlo primero instale VSCode y abra la carpeta del repositorio. VSCode automaticamente recomendara instalar la extension "Remote - Containers", si no es el caso, instalarla manualmente.
+*The repository contains a configuration for a devcontainer for VSCode which includes all tools necessary for development. To use it, first install VSCode and open the repository folder. VSCode will automatically recommend to install the "Remote - Containers" extension, if not, install it manually*
 
 Despues, presionar la flecha verde en la esquina inferior izquierda de VSCode, un menu aparecera, seleccionar "Reopen Folder Locally". VSCode reconstruira el contenedor de desarrollo y reabrira el repositorio dentro de este contenedor. Ahora tiene aceso a todas las herramientas y librerias necesarias: python, cargo, npm, etc. y las extensiones de vscode que facilitan el desarrollo dentro del contenedor.
+*After, press the green arrow in the bottom left corner of VSCode, a menu will apear, select "Reopen Folder Locally". VSCode will build the devcontainer and open the repo in the devcontainer. You will now have all the development tools and libraries available to you: python, cargo, npm, etc. and the vscode extension that will make development easier*
 
-El contenedor de desarrollo tambien esta configurado para tener disponible la instancia de docker del host. Puedes usar `docker build` y `docker-compose` desde la terminal integrada de VSCode.
+**Desarrollo de frontend *Frontend Development***
 
-## Ejemplo
+Navegar a la carpeta `telemetry-frontend`. Dentro de esta carpeta, primero se deben instalar las dependencias `npm install` y despues puedes usar un servidor de desarrollo para el frontend con el comando `npm run dev`.
+*Navigate to the `telemetry-frontend` folder. Development dependecies must be installed first with `npm install`, and then one can use a development server for the frontend with the command `npm run dev`.*
 
-En el contenedor de desarrollo abrir una nueva terminal y ejecutar
-```
-docker-compose build
-docker-compose up
-```
+**Desarrollo de backend *Backend Development***
 
-Abrir una nueva terminal, navegar al directorio de `telemetry-utils` y ejecutar `example_telemetry_generator.py`
-```
-cd telemetry-utils
-python example_telemetry_generator.py
-```
-
-Abrir un buscador web en la pagina `localhost:8080`
-
-Seleccionar el punto de telemetria "Test Spaceship - Fuel". En la control de banda de tiempo de OpenMCT, seleccionar el modo de tiempo real. Se deberia de ver una onda senoidal. Refrescar la pagina, los datos generados deberian de permanecer, se puede navegar a la izquierda y derecha en el tiempo sosteniendo la tecla ALT y arrastrando con el mouse por la grafica o por la banda de tiempo.
-
-## Nota
-
-Aveces el boton para subir los cambios a GitHub de VSCode no funciona. Si ese es el caso, intentar usar el CLI directamente:
-```
-git push
-```
+Se puede construir el backend con docker, o si se desea, puede construirse y ejecutarse localmente con `cargo run`. En el caso de ejecutar el servidor localmente, puede ser que se tenga que cambiar el puerto del servidor. Es recomendable reconstruirlo con docker, ya que no toma mucho tiempo y los puertos de la base de datos son configurados correctamente.
+*The backend can be built with docker, or if needed, it can also be built and run locally with `cargo run`. In the case of executing the server locally, it might be needed to change the ports of the server. It is recommended to build the server with docker, since it doesn't take much time and the ports and database are configured correctly*
