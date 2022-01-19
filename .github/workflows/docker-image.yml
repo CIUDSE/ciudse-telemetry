@@ -22,12 +22,12 @@ jobs:
     
     - name: Build the Docker image (amd64)
       env:
-        TAG_NAME: ciudse-telemetry-amd64:${{ steps.date.outputs.date }}
+        TAG_NAME: ciudse-telemetry-amd64:latest
       run: docker buildx build --platform linux/amd64 --file Dockerfile --tag $TAG_NAME .
       
     - name: Build the Docker image (arm64)
       env:
-        TAG_NAME: ciudse-telemetry-arm64:${{ steps.date.outputs.date }}
+        TAG_NAME: ciudse-telemetry-arm64:latest
       run: docker buildx build --platform linux/arm64 --file Dockerfile --tag $TAG_NAME .
       
     - name: Save the Docker image and compress (amd64)
