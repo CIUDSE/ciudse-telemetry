@@ -30,7 +30,7 @@ jobs:
       run: docker buildx build --platform linux/arm64 --tag ciudse-telemetry:latest .
       
     - name: Save the Docker image and compress (arm64)
-      run: docker save ciudse-telemetry-arm64 | gzip > ciudse-telemetry-arm64.tar.gz
+      run: docker save ciudse-telemetry | gzip > ciudse-telemetry-arm64.tar.gz
     
     - name: Create Release
       uses: "marvinpinto/action-automatic-releases@latest"
