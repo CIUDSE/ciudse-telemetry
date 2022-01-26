@@ -12,7 +12,8 @@ Git
 ## Uso  *Use*
 
 ```
-docker import --change 'CMD ["telemetry-server"]' https://github.com/CIUDSE/ciudse-telemetry/releases/download/latest/ciudse-telemetry-arm64.tar.gz ciudse-telemetry:latest
+wget https://github.com/CIUDSE/ciudse-telemetry/releases/download/latest/ciudse-telemetry-arm64.tar.gz
+docker load -i ciudse-telemetry-arm64.tar.gz
 wget https://github.com/CIUDSE/ciudse-telemetry/releases/download/latest/docker-compose.yml
 docker-compose up
 ```
