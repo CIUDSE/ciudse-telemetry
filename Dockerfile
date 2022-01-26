@@ -9,7 +9,7 @@ RUN case ${TARGETPLATFORM:-"linux/amd64"} in \
     "linux/arm64") echo aarch64-unknown-linux-gnu > /rust_target.txt && \
     apt-get update && apt-get install -y gcc-aarch64-linux-gnu && \
     mkdir .cargo && echo [target.aarch64-unknown-linux-gnu] > .cargo/config &&  \
-    echo linker=\"aarch64-linux-gnu-gcc\" >> .cargo/config ;; \
+    echo linker="\"aarch64-linux-gnu-gcc\"" >> .cargo/config ;; \
     "linux/amd64") echo x86_64-unknown-linux-gnu > /rust_target.txt ;; \
     *) exit 1 ;; \
 esac
