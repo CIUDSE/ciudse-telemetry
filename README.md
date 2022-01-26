@@ -11,6 +11,12 @@ Git
 
 ## Uso  *Use*
 
+```
+docker import https://github.com/CIUDSE/ciudse-telemetry/releases/download/latest/ciudse-telemetry-arm64.tar.gz ciudse-telemetry:latest
+wget https://github.com/CIUDSE/ciudse-telemetry/releases/download/latest/docker-compose.yml
+docker-compose up
+```
+
 Clonar repositorio\
 *Clone repository*
 

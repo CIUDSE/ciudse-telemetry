@@ -21,17 +21,13 @@ jobs:
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
     
     - name: Build the Docker image (amd64)
-      env:
-        TAG_NAME: ciudse-telemetry-amd64:latest
-      run: docker buildx build --platform linux/amd64 --file Dockerfile --tag $TAG_NAME .
+      run: docker buildx build --platform linux/amd64 --tag ciudse-telemetry:latest .
+    
+    - name: Save the Docker image and compress (amd64)
+      run: docker save ciudse-telemetry | gzip > ciudse-telemetry-amd64.tar.gz
       
     - name: Build the Docker image (arm64)
-      env:
-        TAG_NAME: ciudse-telemetry-arm64:latest
-      run: docker buildx build --platform linux/arm64 --file Dockerfile --tag $TAG_NAME .
-      
-    - name: Save the Docker image and compress (amd64)
-      run: docker save ciudse-telemetry-amd64 | gzip > ciudse-telemetry-amd64.tar.gz
+      run: docker buildx build --platform linux/arm64 --tag ciudse-telemetry:latest .
       
     - name: Save the Docker image and compress (arm64)
       run: docker save ciudse-telemetry-arm64 | gzip > ciudse-telemetry-arm64.tar.gz

@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   ciudse-telemetry:
-    build: .
+    image: ciudse-telemetry
     ports:
       - 8080:80
   questdb:
