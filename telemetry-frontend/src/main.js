@@ -33,7 +33,7 @@ openmct.install(openmct.plugins.Conductor({
   ]
 }))
 
-const server_domain = 'localhost'
+const server_domain = window.location.hostname
 const server_port = 8080
 openmct.install(CiudseTelemetryPlugin(server_domain, server_port))
 
