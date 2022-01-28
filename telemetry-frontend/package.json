@@ -25,12 +25,15 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.1",
     "parcel": "^2.0.0",
-    "parcel-resolver-ignore": "^2.0.0",
-    "cesium": "^1.88.0",
-    "openmct": "nasa/openmct"
+    "parcel-resolver-ignore": "^2.0.0"
   },
   "engines": {
     "node": "14.18"
+  },
+  "dependencies": {
+    "cesium": "^1.88.0",
+    "openmct": "nasa/openmct",
+    "core-js": "^3.20.3"
   },
   "parcelIgnore": [
     "openmct/openmct.js",

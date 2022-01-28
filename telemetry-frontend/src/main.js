@@ -1,5 +1,6 @@
 import CiudseTelemetryPlugin from './plugins/ciudse-telemetry/ciudse-telemetry'
 import CesiumMapPlugin from './plugins/cesium-map/cesium-map'
+import '../node_modules/core-js/web/structured-clone'
 
 const ONE_SECOND = 1000
 const THIRTY_SECONDS = 30 * ONE_SECOND

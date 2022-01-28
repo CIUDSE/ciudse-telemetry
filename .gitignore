@@ -6,3 +6,4 @@ telemetry-frontend/.parcel-cache
 telemetry-frontend/openmct
 db/*
 telemetry-server.tar
+out/
