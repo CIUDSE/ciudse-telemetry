@@ -2,7 +2,7 @@
     {
         "name": "Test Spaceship",
         "identifier": {
-            "namespace": "test-spaceship",
+            "namespace": "test_spaceship",
             "key": "root"
         },
         "type": "folder",
@@ -10,18 +10,18 @@
         "composition": [
             {
                 "key": "fuel",
-                "namespace": "test-spaceship"
+                "namespace": "test_spaceship"
             },
             {
                 "key": "battery",
-                "namespace": "test-spaceship"
+                "namespace": "test_spaceship"
             },
             {
-                "namespace": "test-spaceship",
+                "namespace": "test_spaceship",
                 "key": "lights"
             },
             {
-                "namespace": "test-spaceship",
+                "namespace": "test_spaceship",
                 "key": "pos"
             }
         ]
@@ -29,7 +29,7 @@
     {
         "name": "Fuel",
         "identifier": {
-            "namespace": "test-spaceship",
+            "namespace": "test_spaceship",
             "key": "fuel"
         },
         "type": "example.telemetry"
@@ -37,7 +37,7 @@
     {
         "name": "Battery",
         "identifier": {
-            "namespace": "test-spaceship",
+            "namespace": "test_spaceship",
             "key": "battery"
         },
         "type": "example.telemetry"
@@ -45,7 +45,7 @@
     {
         "name": "Lights",
         "identifier": {
-            "namespace": "test-spaceship",
+            "namespace": "test_spaceship",
             "key": "lights"
         },
         "type": "folder"
@@ -53,7 +53,7 @@
     {
         "name": "Position",
         "identifier": {
-            "namespace": "test-spaceship",
+            "namespace": "test_spaceship",
             "key": "pos"
         },
         "type": "cesium.geodatum"

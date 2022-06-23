@@ -3,12 +3,13 @@ use crate::{messages::*, telemetry::types::DomainObjectIdentifier};
 use actix::prelude::*;
 use chrono::NaiveDateTime;
 use itertools::Itertools;
-use log::warn;
+use log::{warn, info};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::error::Error;
 use std::io::prelude::*;
 use std::net::TcpStream;
+use crate::config;
 
 #[derive(Debug)]
 pub struct DBActor {
@@ -120,7 +121,7 @@ fn parse_db_row(val: &Value, timestamp_col: usize, columns: &[DbColumn]) -> Opti
 async fn querydb(msg: QueryDBMsg) -> Result<Vec<TelemetryDatum>, Box<dyn Error>> {
     let sql_query = format_db_query(msg);
 
-    let database_url = "http://questdb:9000/exec";
+    let database_url = format!("http://{}:{}/exec", config::QDB_HOST, config::QDB_REST_EXEC_PORT);
 
     let req = actix_web::client::Client::new()
         .get(database_url)
@@ -163,11 +164,13 @@ impl DBActor {
     }
 
     fn pushdb(&mut self, msg: &PushDBMsg) -> Result<(), Box<dyn Error>> {
-        let database_address = "questdb:9009";
+        let database_address = format!("{}:{}", config::QDB_HOST, config::QDB_LINE_INJEST_PORT);
+        info!("logging to db addr `{}`", database_address);
         if self.stream.is_none() {
             self.stream = Some(TcpStream::connect(database_address)?);
         }
         let mut stream = self.stream.as_ref().unwrap();
+        info!("stream connected");
         // Influx line protocol timestamps are in nanoseconds
         let table = table_name(&msg.identifier);
         let mut query: String = msg
@@ -185,7 +188,9 @@ impl DBActor {
             })
             .collect();
         query.push('\n');
-        stream.write_all(query.as_bytes())?;
+        let bytes = query.as_bytes();
+        info!("writing as bytes `{}`", query.as_str());
+        stream.write_all(bytes)?;
         Ok(())
     }
 }

@@ -7,3 +7,4 @@ telemetry-frontend/openmct
 db/*
 telemetry-server.tar
 out/
+*.DS_Store

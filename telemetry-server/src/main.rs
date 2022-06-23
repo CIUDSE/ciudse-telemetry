@@ -9,6 +9,7 @@ use telemetry_server::data::*;
 use telemetry_server::messages::*;
 use telemetry_server::telemetry::types::*;
 use telemetry_server::telemetry::utils::*;
+use telemetry_server::config;
 
 #[derive(Deserialize)]
 struct HistoricalTelemetryRequestQueryInfo {
@@ -97,7 +98,7 @@ async fn main() -> std::io::Result<()> {
             .service(historical_index)
             .service(fs::Files::new("/", "static").index_file("index.html"))
     })
-    .bind("0.0.0.0:80")?
+    .bind(format!("0.0.0.0:{}", config::BIND_PORT))?
     .run()
     .await
 }

@@ -35,7 +35,7 @@ openmct.install(openmct.plugins.Conductor({
 }))
 
 const server_domain = window.location.hostname
-const server_port = 8080
+const server_port = 80
 openmct.install(CiudseTelemetryPlugin(server_domain, server_port))
 
 openmct.install(CesiumMapPlugin())

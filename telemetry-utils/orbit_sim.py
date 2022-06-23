@@ -9,7 +9,7 @@ async def main():
     # For production, create a container for Python apps and attach it to the network with docker-compose
     namespace = 'test-spaceship'
     key = 'fuel'
-    uri = 'ws://172.17.0.1:8080/injest?namespace=test-spaceship&key=pos'
+    uri = 'ws://localhost:80/injest?namespace=test_spaceship&key=pos'
     async with websockets.connect(uri) as websocket:
         t0 = time()
         while True:
