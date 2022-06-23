@@ -58,7 +58,7 @@ async fn querydb_suppress_errors(msg: QueryDBMsg) -> Vec<TelemetryDatum> {
 }
 
 fn table_name(identifier: &DomainObjectIdentifier) -> String {
-    format!("{}::{}", identifier.namespace, identifier.key)
+    format!("{}#{}", identifier.namespace, identifier.key)
 }
 
 fn format_db_query(msg: QueryDBMsg) -> String {
