@@ -189,7 +189,6 @@ impl DBActor {
             .collect();
         query.push('\n');
         let bytes = query.as_bytes();
-        info!("writing as bytes `{}`", query.as_str());
         stream.write_all(bytes)?;
         Ok(())
     }

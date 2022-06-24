@@ -1,5 +1,113 @@
 [
     {
+        "name": "Cimarron 2",
+        "identifier": {
+            "namespace": "cimarron2",
+            "key": "root"
+        },
+        "type": "folder",
+        "location": "ROOT",
+        "composition": [
+            {
+                "key": "velx",
+                "namespace": "cimarron2"
+            },
+            {
+                "key": "vely",
+                "namespace": "cimarron2"
+            },
+            {
+                "key": "velz",
+                "namespace": "cimarron2"
+            },
+            {
+                "key": "rotx",
+                "namespace": "cimarron2"
+            },
+            {
+                "key": "roty",
+                "namespace": "cimarron2"
+            },
+            {
+                "key": "rotz",
+                "namespace": "cimarron2"
+            },
+            {
+                "key": "height",
+                "namespace": "cimarron2"
+            },
+            {
+                "key": "pos",
+                "namespace": "cimarron2"
+            }
+        ]
+    },
+    {
+        "name": "X Velocity",
+        "identifier": {
+            "namespace": "cimarron2",
+            "key": "velx"
+        },
+        "type": "example.telemetry"
+    },
+    {
+        "name": "Y Velocity",
+        "identifier": {
+            "namespace": "cimarron2",
+            "key": "vely"
+        },
+        "type": "example.telemetry"
+    },
+    {
+        "name": "Z Velocity",
+        "identifier": {
+            "namespace": "cimarron2",
+            "key": "velz"
+        },
+        "type": "example.telemetry"
+    },
+    {
+        "name": "X Rotation",
+        "identifier": {
+            "namespace": "cimarron2",
+            "key": "rotx"
+        },
+        "type": "example.telemetry"
+    },
+    {
+        "name": "Y Rotation",
+        "identifier": {
+            "namespace": "cimarron2",
+            "key": "roty"
+        },
+        "type": "example.telemetry"
+    },
+    {
+        "name": "Z Rotation",
+        "identifier": {
+            "namespace": "cimarron2",
+            "key": "rotz"
+        },
+        "type": "example.telemetry"
+    },
+    {
+        "name": "Height",
+        "identifier": {
+            "namespace": "cimarron2",
+            "key": "height"
+        },
+        "type": "example.telemetry"
+    },
+    {
+        "name": "Position",
+        "identifier": {
+            "namespace": "cimarron2",
+            "key": "pos"
+        },
+        "type": "cesium.geodatum"
+    },
+
+    {
         "name": "Test Spaceship",
         "identifier": {
             "namespace": "test_spaceship",
