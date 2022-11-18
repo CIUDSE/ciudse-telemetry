@@ -18,17 +18,16 @@
   "keywords": [],
   "author": "Club de Investigación Universitario de Desarrollo en Sistemas Espaciales",
   "devDependencies": {
-    "@parcel/validator-eslint": "^2.0.1",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.1",
-    "parcel": "^2.0.0",
-    "parcel-resolver-ignore": "^2.0.0"
+    "eslint": "^7.32",
+    "eslint-config-standard": "^16.0",
+    "eslint-plugin-import": "^2.25",
+    "eslint-plugin-node": "^11.1",
+    "eslint-plugin-promise": "^5.1",
+    "parcel": "^2.0",
+    "parcel-resolver-ignore": "^2.0"
   },
   "engines": {
-    "node": "14.18"
+    "node": ">=14.19.1"
   },
   "dependencies": {
     "cesium": "^1.88.0",
