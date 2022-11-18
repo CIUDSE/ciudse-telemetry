@@ -42,7 +42,7 @@ where
             act.refresh_heartbeat();
         }
         Ok(ws::Message::Text(text)) => {
-            text_handler(text, ctx, act);
+            text_handler(text.to_string(), ctx, act);
         }
         Ok(ws::Message::Binary(_bin)) => {}
         Ok(ws::Message::Close(reason)) => {
