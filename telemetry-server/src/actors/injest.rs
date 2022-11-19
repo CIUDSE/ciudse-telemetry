@@ -3,7 +3,7 @@ use crate::{actors::common::*, data::*, messages::*};
 use actix::prelude::*;
 use actix_web::web;
 use actix_web_actors::ws;
-use log::{warn, info};
+use log::warn;
 use std::collections::HashMap;
 use std::{
     error::Error,
