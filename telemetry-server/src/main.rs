@@ -41,7 +41,7 @@ async fn historical_index(
     }
     let raw_data = raw_data.unwrap();
     let datums = raw_data;
-    Ok(HttpResponse::Ok().body(datums_to_json(datums)))
+    Ok(HttpResponse::Ok().body(datums_to_json(datums).to_string()))
 }
 
 #[get("/realtime")]

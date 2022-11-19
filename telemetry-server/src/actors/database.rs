@@ -4,6 +4,7 @@ use actix::prelude::*;
 use chrono::NaiveDateTime;
 use itertools::Itertools;
 use log::{warn, info};
+use reqwest::Url;
 use serde_json::Value;
 use std::collections::HashMap;
 use std::error::Error;
@@ -121,16 +122,13 @@ fn parse_db_row(val: &Value, timestamp_col: usize, columns: &[DbColumn]) -> Opti
 async fn querydb(msg: QueryDBMsg) -> Result<Vec<TelemetryDatum>, Box<dyn Error>> {
     let sql_query = format_db_query(msg);
 
-    let database_url = format!("http://{}:{}/exec", config::QDB_HOST, config::QDB_REST_EXEC_PORT);
+    let url = Url::parse_with_params(&format!("https://{}:{}/exec", config::QDB_HOST, config::QDB_REST_EXEC_PORT), &[("query", sql_query)])?;
+    
+    let resp = reqwest::get(url).await?;
 
-    let req = actix_web::client::Client::new()
-        .get(database_url)
-        .query(&[("query", sql_query)])?;
+    let bytes = resp.bytes().await?;
 
-    let mut response = req.send().await?;
-    let raw_data = response.body().await?;
-
-    let data: Value = serde_json::from_slice(&raw_data)?;
+    let data: Value = serde_json::from_slice(&bytes)?;
 
     let columns: Vec<DbColumn> = data["columns"]
         .as_array()
