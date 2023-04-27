@@ -1,0 +1,84 @@
+{
+    "example.telemetry": {
+        "name": "Example Telemetry Point",
+        "description": "Example telemetry point from our happy tutorial.",
+        "cssClass": "icon-telemetry",
+        "initializeValues": {
+            "telemetry": {
+                "values": [
+                    {
+                        "key": "value",
+                        "source": "value",
+                        "name": "Value",
+                        "units": "kilograms",
+                        "format": "float",
+                        "min": 0,
+                        "max": 100,
+                        "hints": {
+                            "range": 1
+                        }
+                    },
+                    {
+                        "key": "utc",
+                        "source": "server_timestamp",
+                        "name": "Timestamp",
+                        "format": "utc",
+                        "hints": {
+                            "domain": 1
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "cesium.geodatum": {
+        "name": "Geographical Coordinate",
+        "description": "Coordinate consisting of latitude, longitude and height",
+        "cssClass": "icon-ciudse-telemetry-pos",
+        "initializeValues": {
+            "telemetry": {
+                "values": [
+                    {
+                        "key": "lat",
+                        "source": "lat",
+                        "name": "Latitude",
+                        "units": "degrees",
+                        "format": "float",
+                        "hints": {
+                            "range": 1
+                        }
+                    },
+                    {
+                        "key": "lng",
+                        "source": "lng",
+                        "name": "Longitude",
+                        "units": "degrees",
+                        "format": "float",
+                        "hints": {
+                            "range": 1
+                        }
+                    },
+                    {
+                        "key": "hgt",
+                        "source": "hgt",
+                        "name": "Height",
+                        "units": "meters",
+                        "format": "float",
+                        "hints": {
+                            "range": 1
+                        }
+                    },
+                    {
+                        "key": "utc",
+                        "source": "server_timestamp",
+                        "name": "Timestamp",
+                        "format": "utc",
+                        "hints": {
+                            "domain": 1
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
