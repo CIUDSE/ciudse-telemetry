@@ -1,6 +1,5 @@
 const openmct = require('../node_modules/openmct/dist/openmct');
 import CiudseTelemetryPlugin from './plugins/ciudse-telemetry/ciudse-telemetry'
-import CesiumPlugin from '../submodules/openmct-cesium-plugin/dist/plugin'
 
 const THIRTY_SECONDS = 30 * 1000;
 const ONE_MINUTE = THIRTY_SECONDS * 2;
@@ -139,7 +138,5 @@ openmct.install(openmct.plugins.ScatterPlot());
 const server_domain = window.location.hostname
 const server_port = 80
 openmct.install(CiudseTelemetryPlugin(server_domain, server_port))
-
-openmct.install(CesiumPlugin())
 
 openmct.start();
