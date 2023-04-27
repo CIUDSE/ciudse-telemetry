@@ -19,3 +19,7 @@ Necesitas NPM, puedes usar NVM For Windows, o instalar NPM directamente
 https://github.com/coreybutler/nvm-windows
 
 https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+
+## Base de Datos
+
+QuestDB
