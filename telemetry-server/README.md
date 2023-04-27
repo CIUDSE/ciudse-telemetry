@@ -1,5 +1,9 @@
 # telemetry-server
 
+`cargo build`
+
+`cargo ruin`
+
 A telemetry server for OpenMCT
 
 Features:
