@@ -2,7 +2,7 @@
 
 `cargo build`
 
-`cargo ruin`
+`cargo run`
 
 A telemetry server for OpenMCT
 
