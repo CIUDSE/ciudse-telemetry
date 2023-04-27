@@ -23,3 +23,5 @@ https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 ## Base de Datos
 
 QuestDB
+
+https://questdb.io/docs/get-started/binaries/
