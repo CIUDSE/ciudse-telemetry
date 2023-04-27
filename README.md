@@ -28,7 +28,7 @@ https://questdb.io/docs/get-started/binaries/
 
 
 
-# En Resumen
+## En Resumen
 
 1. Prender la base de datos
 2. Prender el servidor `cd telemetry-server` `cargo run`
