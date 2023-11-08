@@ -12,7 +12,7 @@ https://www.rust-lang.org/tools/install
 
 ## telemetry-frontend
 
-Tiene su propio README
+[Tiene su propio README](./telemetry-frontend/README.md)
 
 Necesitas NPM, puedes usar NVM For Windows, o instalar NPM directamente
 

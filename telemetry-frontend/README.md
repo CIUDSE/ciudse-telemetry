@@ -1,20 +1,14 @@
 # OpenMCT Plugin Template for Yarn and Parcel
 
-[Instalar Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
+## [Instalar Yarn](https://yarnpkg.com/getting-started/install)
 
-`npm install --global yarn`
+En una terminal de administrador
 
-Checar si se instalo con
+`corepack enable`
 
-`yarn --version`
+## Instalar librerias del proyecto
 
-Si no corre bien, intenta:
+En una terminal (no administrador), desde `ciudse-telemetry/telemetry-frontend` correr
 
-1. Reiniciar la terminal
-2. Correr `Set-ExecutionPolicy RemoteSigned`
+`yarn install`
 
-`yarn install` para instalar las dependencias
-
-`yarn build` to create a bundle in `./dist`
-
-`yarn start` to create a devserver with openmct and your plugin

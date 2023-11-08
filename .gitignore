@@ -4,6 +4,7 @@ telemetry-frontend/node_modules
 telemetry-frontend/dist
 telemetry-frontend/.parcel-cache
 telemetry-frontend/openmct
+telemetry-frontend/.yarn/install-state.gz
 db/*
 telemetry-server.tar
 out/
