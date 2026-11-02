@@ -34,3 +34,5 @@ https://questdb.io/docs/get-started/binaries/
 2. Prender el servidor `cd telemetry-server` `cargo run`
 3. Prender el frontend `cd telemetry-frontend` `yarn start`
 4. Prender la fuente de telemetria `cd telemetry-utils` `python orbit_sim.py`
+
+![diagrama de arquitectura](/diagrama.png)
